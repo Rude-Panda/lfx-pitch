@@ -9,25 +9,24 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #080810;
-      --surface:   #10101c;
-      --surface2:  #181828;
-      --border:    rgba(255,255,255,0.07);
-      --purple:    #7c3aed;
-      --purple-l:  #a78bfa;
-      --blue:      #2563eb;
-      --blue-l:    #60a5fa;
-      --cyan:      #06b6d4;
-      --green:     #10b981;
-      --orange:    #f59e0b;
-      --red:       #ef4444;
-      --text:      #f1f5f9;
-      --muted:     #94a3b8;
-      --muted2:    #475569;
-      --radius:    16px;
-      --radius-sm: 8px;
-      --grad:      linear-gradient(135deg, var(--purple), var(--blue));
-      --grad-text: linear-gradient(90deg, var(--purple-l), var(--blue-l));
+      --bg:        #ffffff;
+      --surface:   #f7f8fa;
+      --surface2:  #f0f2f5;
+      --border:    #dde1e8;
+      --border-l:  #eaecf0;
+      --navy:      #1b2f55;
+      --navy-l:    #2c4a80;
+      --accent:    #1e3a6e;
+      --blue:      #2155a3;
+      --green:     #1a6b3a;
+      --orange:    #a85a00;
+      --red:       #b91c1c;
+      --text:      #111827;
+      --muted:     #5a6478;
+      --muted2:    #9aa0ad;
+      --radius:    5px;
+      --radius-sm: 3px;
+      --rule:      #c8cdd8;
     }
 
     html {
@@ -35,8 +34,16 @@
       scroll-behavior: smooth;
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Georgia, system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Page wrapper — max width on desktop ─── */
+    body {
+      max-width: 900px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border-l);
+      border-right: 1px solid var(--border-l);
     }
 
     /* ─── Slide shell ─── */
@@ -45,115 +52,96 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: clamp(48px, 8vw, 80px) clamp(20px, 5vw, 64px);
+      padding: clamp(40px, 7vw, 72px) clamp(24px, 5vw, 56px);
       position: relative;
-      overflow: hidden;
+      border-bottom: 1px solid var(--border);
     }
 
-    /* ─── Noise texture overlay ─── */
-    .slide::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-    }
+    /* Alternating subtle backgrounds */
+    .slide:nth-child(odd)  { background: var(--bg); }
+    .slide:nth-child(even) { background: var(--surface); }
 
-    .slide > * { position: relative; z-index: 1; }
-
-    /* ─── Glow blobs ─── */
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.15;
-      pointer-events: none;
-      z-index: 0;
-    }
+    /* ─── Blobs: hidden in light mode ─── */
+    .blob { display: none; }
 
     /* ─── Slide counter ─── */
     .slide-num {
       position: absolute;
-      bottom: 20px;
-      right: 24px;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
+      bottom: 16px;
+      right: 20px;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
       color: var(--muted2);
-      z-index: 2;
       font-variant-numeric: tabular-nums;
     }
 
-    /* ─── Gradient text ─── */
-    .grad-text {
-      background: var(--grad-text);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    /* ─── Accent text (replaces gradient text) ─── */
+    .grad-text { color: var(--navy); }
 
-    /* ─── Tag / pill ─── */
+    /* ─── Tag / section label ─── */
     .tag {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 5px 12px;
-      border-radius: 100px;
-      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      border: 1px solid var(--border);
+      border: 1px solid var(--rule);
       color: var(--muted);
-      background: rgba(255,255,255,0.03);
-      margin-bottom: 20px;
+      background: transparent;
+      margin-bottom: 16px;
     }
-    .tag.purple { border-color: rgba(124,58,237,0.4); color: var(--purple-l); background: rgba(124,58,237,0.08); }
-    .tag.blue   { border-color: rgba(37,99,235,0.4);  color: var(--blue-l);   background: rgba(37,99,235,0.08); }
-    .tag.green  { border-color: rgba(16,185,129,0.4); color: var(--green);    background: rgba(16,185,129,0.08); }
-    .tag.orange { border-color: rgba(245,158,11,0.4); color: var(--orange);   background: rgba(245,158,11,0.08); }
+    .tag.purple { border-color: #b8c6e0; color: var(--navy-l); }
+    .tag.blue   { border-color: #b8c6e0; color: var(--blue); }
+    .tag.green  { border-color: #b8d4be; color: var(--green); }
+    .tag.orange { border-color: #d9c0a0; color: var(--orange); }
 
     /* ─── Typography ─── */
     .eyebrow {
-      font-size: clamp(10px, 2vw, 12px);
-      font-weight: 700;
+      font-size: 10px;
+      font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size: clamp(36px, 8vw, 72px);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
+      font-size: clamp(30px, 6vw, 52px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
     }
 
     h2 {
-      font-size: clamp(28px, 6vw, 52px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.025em;
+      font-size: clamp(24px, 5vw, 40px);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      color: var(--text);
     }
 
     h3 {
-      font-size: clamp(18px, 4vw, 28px);
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.015em;
+      font-size: clamp(16px, 3vw, 22px);
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--text);
     }
 
     .body-lg {
-      font-size: clamp(15px, 2.5vw, 18px);
-      line-height: 1.65;
+      font-size: clamp(14px, 2vw, 16px);
+      line-height: 1.7;
       color: var(--muted);
       max-width: 64ch;
     }
 
     .body-sm {
-      font-size: clamp(13px, 1.8vw, 15px);
+      font-size: clamp(12px, 1.6vw, 13px);
       line-height: 1.6;
       color: var(--muted);
     }
@@ -162,136 +150,123 @@
     .stat-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin-top: 32px;
+      gap: 1px;
+      margin-top: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--border);
     }
 
     .stat-card {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 16px;
+      background: var(--bg);
+      padding: 18px 16px;
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
+    .slide:nth-child(even) .stat-card { background: var(--surface); }
 
     .stat-card .num {
-      font-size: clamp(24px, 5vw, 38px);
-      font-weight: 800;
-      letter-spacing: -0.03em;
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
       line-height: 1;
+      color: var(--navy);
     }
 
     .stat-card .label {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
-      line-height: 1.4;
+      line-height: 1.45;
       margin-top: 4px;
     }
 
     /* ─── Source note ─── */
     .source {
-      font-size: 10px;
+      font-size: 9px;
       color: var(--muted2);
-      margin-top: 2px;
+      margin-top: 3px;
+      font-style: italic;
     }
 
     /* ─── Divider ─── */
     .divider {
-      width: 40px;
-      height: 3px;
-      border-radius: 2px;
-      background: var(--grad);
-      margin: 20px 0;
+      width: 32px;
+      height: 2px;
+      background: var(--navy);
+      margin: 16px 0;
+      opacity: 0.4;
     }
 
     /* ─── Card / panel ─── */
     .card {
-      background: var(--surface2);
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: clamp(16px, 3vw, 24px);
+      padding: clamp(14px, 2.5vw, 20px);
     }
+    .slide:nth-child(even) .card { background: var(--bg); }
 
     /* ─── Table ─── */
     .data-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: clamp(12px, 2vw, 14px);
+      font-size: clamp(11px, 1.8vw, 13px);
     }
     .data-table th {
       text-align: left;
-      padding: 10px 12px;
-      font-size: 10px;
+      padding: 8px 12px;
+      font-size: 9px;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted2);
       border-bottom: 1px solid var(--border);
+      background: var(--surface2);
     }
     .data-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border-l);
       color: var(--text);
       vertical-align: top;
     }
     .data-table tr:last-child td { border-bottom: none; }
-    .data-table .accent { color: var(--purple-l); font-weight: 700; }
+    .data-table .accent { color: var(--navy); font-weight: 600; }
     .data-table .muted  { color: var(--muted); }
-    .data-table .total td { background: rgba(124,58,237,0.06); font-weight: 700; }
-    .data-table .total td:first-child { border-radius: 8px 0 0 8px; }
-    .data-table .total td:last-child  { border-radius: 0 8px 8px 0; }
+    .data-table .total td { background: #eef1f8; font-weight: 600; }
 
     /* ─── Quote block ─── */
     .quote {
-      border-left: 3px solid var(--purple);
-      padding: 12px 20px;
-      margin: 20px 0;
-      background: rgba(124,58,237,0.05);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      border-left: 2px solid var(--navy);
+      padding: 10px 16px;
+      margin: 16px 0;
+      background: var(--surface);
     }
     .quote p {
-      font-size: clamp(14px, 2.2vw, 16px);
+      font-size: clamp(13px, 2vw, 15px);
       color: var(--text);
       font-style: italic;
       line-height: 1.6;
     }
     .quote .attribution {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
-      margin-top: 6px;
+      margin-top: 5px;
       font-style: normal;
-    }
-
-    /* ─── Highlight number (big lone stat) ─── */
-    .big-stat {
-      text-align: center;
-      padding: 28px 20px;
-    }
-    .big-stat .num {
-      font-size: clamp(48px, 12vw, 96px);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1;
-    }
-    .big-stat .caption {
-      font-size: clamp(13px, 2.5vw, 16px);
-      color: var(--muted);
-      margin-top: 8px;
     }
 
     /* ─── Pill list ─── */
     .pill-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       margin-top: 12px;
     }
     .pill {
-      padding: 5px 12px;
-      border-radius: 100px;
-      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
       font-weight: 500;
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -303,78 +278,79 @@
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-l);
     }
     .comp-row:last-child { border-bottom: none; }
     .comp-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 14px;
       flex-shrink: 0;
       background: var(--surface2);
       border: 1px solid var(--border);
     }
     .comp-body { flex: 1; min-width: 0; }
-    .comp-name { font-size: 14px; font-weight: 700; }
-    .comp-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .comp-val { font-size: 13px; font-weight: 700; white-space: nowrap; text-align: right; }
+    .comp-name { font-size: 13px; font-weight: 600; }
+    .comp-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .comp-val { font-size: 12px; font-weight: 600; white-space: nowrap; text-align: right; color: var(--navy); }
 
     /* ─── Animation base ─── */
     .reveal {
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
+      transform: translateY(18px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .reveal.visible {
       opacity: 1;
       transform: none;
     }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-    .reveal-delay-5 { transition-delay: 0.5s; }
-    .reveal-delay-6 { transition-delay: 0.6s; }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+    .reveal-delay-5 { transition-delay: 0.40s; }
+    .reveal-delay-6 { transition-delay: 0.48s; }
 
     /* ─── Progress bar ─── */
     .progress-bar {
       position: fixed;
       top: 0;
       left: 0;
-      height: 3px;
-      background: var(--grad);
+      height: 2px;
+      background: var(--navy);
       z-index: 100;
       transition: width 0.3s ease;
+      opacity: 0.6;
     }
 
     /* ─── Nav dots ─── */
     .nav-dots {
       position: fixed;
-      right: 14px;
+      right: 10px;
       top: 50%;
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
       z-index: 100;
     }
     .nav-dot {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
-      background: var(--muted2);
+      background: var(--rule);
       cursor: pointer;
       transition: background 0.2s, transform 0.2s;
       border: none;
     }
     .nav-dot.active {
-      background: var(--purple-l);
-      transform: scale(1.4);
+      background: var(--navy);
+      transform: scale(1.5);
     }
 
     /* ─── Two-column layout helper ─── */
@@ -383,34 +359,35 @@
       grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
-    @media (max-width: 480px) {
+    @media (max-width: 520px) {
       .two-col { grid-template-columns: 1fr; }
       .nav-dots { display: none; }
     }
 
     /* ─── Spacer ─── */
-    .mt-s  { margin-top: 12px; }
-    .mt-m  { margin-top: 20px; }
-    .mt-l  { margin-top: 32px; }
-    .mt-xl { margin-top: 48px; }
+    .mt-s  { margin-top: 10px; }
+    .mt-m  { margin-top: 18px; }
+    .mt-l  { margin-top: 28px; }
+    .mt-xl { margin-top: 44px; }
 
     /* ─── Section header inside a slide ─── */
     .section-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 12px;
     }
     .section-header .dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: var(--grad);
+      background: var(--navy);
+      opacity: 0.5;
       flex-shrink: 0;
     }
     .section-header span {
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 10px;
+      font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
@@ -418,148 +395,142 @@
 
     /* ─── Closer line ─── */
     .closer {
-      margin-top: 28px;
-      padding: 16px 20px;
+      margin-top: 24px;
+      padding: 14px 18px;
       border-radius: var(--radius);
-      background: rgba(124,58,237,0.08);
-      border: 1px solid rgba(124,58,237,0.25);
-      font-size: clamp(14px, 2.5vw, 17px);
-      font-weight: 600;
-      line-height: 1.5;
-      color: var(--text);
+      background: #eef1f8;
+      border: 1px solid #c5cfe0;
+      font-size: clamp(13px, 2vw, 15px);
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--navy);
     }
 
     /* ─── Scroll hint ─── */
     .scroll-hint {
       position: absolute;
-      bottom: 28px;
+      bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       color: var(--muted2);
-      font-size: 10px;
+      font-size: 9px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       animation: bounce 2s ease infinite;
     }
-    .scroll-hint svg { opacity: 0.5; }
     @keyframes bounce {
       0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
+      50%       { transform: translateX(-50%) translateY(5px); }
     }
 
-    /* ─── Gradient border card ─── */
+    /* ─── Highlight card (replaces grad-card) ─── */
     .grad-card {
       border-radius: var(--radius);
-      padding: 1px;
-      background: var(--grad);
+      border: 1px solid #b8c6e0;
+      background: #f0f4fb;
     }
     .grad-card-inner {
-      border-radius: calc(var(--radius) - 1px);
-      background: var(--surface);
-      padding: clamp(16px, 3vw, 24px);
+      padding: clamp(14px, 2.5vw, 20px);
     }
 
     /* ─── Timeline row ─── */
-    .timeline { margin-top: 16px; }
+    .timeline { margin-top: 14px; }
     .tl-item {
       display: flex;
-      gap: 14px;
-      padding-bottom: 16px;
+      gap: 12px;
+      padding-bottom: 14px;
       position: relative;
     }
     .tl-item::before {
       content: '';
       position: absolute;
-      left: 13px;
-      top: 28px;
+      left: 11px;
+      top: 24px;
       bottom: 0;
       width: 1px;
       background: var(--border);
     }
     .tl-item:last-child::before { display: none; }
     .tl-dot {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: var(--surface2);
-      border: 2px solid var(--border);
+      border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 11px;
       flex-shrink: 0;
     }
-    .tl-dot.active { border-color: var(--purple); background: rgba(124,58,237,0.15); }
-    .tl-body { flex: 1; padding-top: 4px; }
-    .tl-date { font-size: 11px; color: var(--purple-l); font-weight: 700; }
-    .tl-title { font-size: 14px; font-weight: 600; margin-top: 1px; }
-    .tl-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+    .tl-dot.active { border-color: var(--navy); background: #eef1f8; }
+    .tl-body { flex: 1; padding-top: 3px; }
+    .tl-date  { font-size: 10px; color: var(--navy); font-weight: 600; }
+    .tl-title { font-size: 13px; font-weight: 600; margin-top: 1px; }
+    .tl-desc  { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
 
-    /* ─── SLIDE 1: Cover ─── */
-    #cover { background: var(--bg); }
-    #cover .blob.a { width: 500px; height: 500px; background: var(--purple); top: -150px; right: -150px; opacity: 0.12; }
-    #cover .blob.b { width: 400px; height: 400px; background: var(--blue);   bottom: -100px; left: -100px; opacity: 0.1; }
+    /* ─── Cover slide ─── */
+    #cover {
+      background: var(--navy);
+      color: #fff;
+    }
+    #cover h1, #cover .grad-text { color: #fff; }
+    #cover .cover-sub    { color: rgba(255,255,255,0.65); }
+    #cover .cover-footer-item .lbl { color: rgba(255,255,255,0.45); }
+    #cover .cover-footer-sep { background: rgba(255,255,255,0.2); }
+    #cover .conf-badge   { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.65); }
+    #cover .scroll-hint  { color: rgba(255,255,255,0.3); }
+    #cover .slide-num    { color: rgba(255,255,255,0.25); }
+    #cover .cover-badge  { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); border-radius: var(--radius-sm); }
 
     .logo {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 40px;
+      margin-bottom: 36px;
     }
     .logo-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: var(--grad);
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius);
+      background: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: -0.05em;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
       flex-shrink: 0;
     }
-    .logo-name {
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-    .logo-sub {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 1px;
-    }
+    .logo-name { font-size: 15px; font-weight: 600; color: #fff; }
+    .logo-sub  { font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 1px; }
 
     .cover-badge {
       display: inline-flex;
       align-items: center;
-      padding: 6px 14px;
-      border-radius: 100px;
-      background: rgba(124,58,237,0.12);
-      border: 1px solid rgba(124,58,237,0.3);
-      font-size: 11px;
-      font-weight: 700;
+      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--purple-l);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .cover-sub {
-      font-size: clamp(16px, 3.5vw, 22px);
-      color: var(--muted);
-      line-height: 1.5;
-      margin-top: 16px;
-      max-width: 48ch;
+      font-size: clamp(14px, 2.5vw, 18px);
+      line-height: 1.6;
+      margin-top: 14px;
+      max-width: 50ch;
+      font-weight: 400;
     }
 
     .cover-footer {
-      margin-top: 48px;
+      margin-top: 40px;
       display: flex;
       align-items: center;
       gap: 20px;
@@ -570,30 +541,27 @@
       flex-direction: column;
       gap: 2px;
     }
-    .cover-footer-item .val { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
-    .cover-footer-item .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-    .cover-footer-sep { width: 1px; height: 32px; background: var(--border); }
+    .cover-footer-item .val { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: #fff; }
+    .cover-footer-item .lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .cover-footer-sep { width: 1px; height: 28px; }
 
     /* ─── Confidence badge row ─── */
     .conf-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       margin-top: 20px;
     }
     .conf-badge {
       display: flex;
       align-items: center;
       gap: 5px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: var(--radius-sm);
+      font-size: 10px;
       font-weight: 500;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--muted);
     }
-    .conf-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
+    .conf-badge .dot { width: 4px; height: 4px; border-radius: 50%; background: #6ee7a0; }
   </style>
 </head>
 <body>
@@ -696,17 +664,17 @@
       <span class="source">Ardion.io, 2026</span>
     </div>
     <div class="stat-card">
-      <span class="num" style="color:var(--orange);" data-count="432" data-suffix="+">0</span>
+      <span class="num" data-count="432" data-suffix="+">0</span>
       <span class="label">Image generation tools alone</span>
       <span class="source">Flowlyn.com, 2026</span>
     </div>
     <div class="stat-card">
-      <span class="num" style="color:var(--cyan);" data-count="86" data-suffix="%">0</span>
+      <span class="num" data-count="86" data-suffix="%">0</span>
       <span class="label">Creators use GenAI in their work</span>
       <span class="source">Adobe, Oct 2025 — 16K creators</span>
     </div>
     <div class="stat-card">
-      <span class="num" style="color:var(--purple-l);" data-count="60" data-suffix="%">0</span>
+      <span class="num" data-count="60" data-suffix="%">0</span>
       <span class="label">Use 3+ AI tools every 3 months</span>
       <span class="source">Adobe, 2025</span>
     </div>
@@ -748,13 +716,13 @@
           <tr><td>Workers who feel tools make them less productive</td><td class="accent">45%</td></tr>
         </tbody>
       </table>
-      <p class="body-sm mt-s">A 6-tool project → <strong style="color:var(--orange)">~1.9 hours lost</strong> to switching alone.</p>
+      <p class="body-sm mt-s">A 6-tool project → <strong>~1.9 hours lost</strong> to switching alone.</p>
     </div>
 
     <!-- Money cost -->
     <div class="card reveal reveal-delay-3">
       <div class="section-header">
-        <div class="dot" style="background:var(--orange);"></div>
+        <div class="dot"></div>
         <span>Money Cost</span>
       </div>
       <table class="data-table">
@@ -772,21 +740,21 @@
           <tr class="total"><td>Real monthly stack</td><td class="accent">$357</td></tr>
         </tbody>
       </table>
-      <p class="body-sm mt-s">That's <strong style="color:var(--orange)">$4,284/year</strong> — before team seats.</p>
+      <p class="body-sm mt-s">That's <strong>$4,284/year</strong> — before team seats.</p>
     </div>
   </div>
 
   <div class="stat-grid mt-m reveal reveal-delay-4" style="grid-template-columns: repeat(3, 1fr);">
-    <div class="stat-card" style="text-align:center;">
-      <span class="num" style="color:var(--orange);font-size:clamp(20px,4vw,28px);">56%</span>
+    <div class="stat-card">
+      <span class="num">56%</span>
       <span class="label">say they can't afford all the AI tools they want</span>
     </div>
-    <div class="stat-card" style="text-align:center;">
-      <span class="num" style="color:var(--red);font-size:clamp(20px,4vw,28px);">54%</span>
+    <div class="stat-card">
+      <span class="num">54%</span>
       <span class="label">believe AI pricing is becoming "a rip-off"</span>
     </div>
-    <div class="stat-card" style="text-align:center;">
-      <span class="num" style="color:var(--purple-l);font-size:clamp(20px,4vw,28px);">61%</span>
+    <div class="stat-card">
+      <span class="num">61%</span>
       <span class="label">cut other subscriptions to keep paying for AI tools</span>
     </div>
   </div>
@@ -823,17 +791,17 @@
 
   <div class="stat-grid mt-m reveal reveal-delay-3" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
     <div class="stat-card">
-      <span class="num grad-text" style="font-size:clamp(20px,4vw,28px);">$210B</span>
+      <span class="num">$210B</span>
       <span class="label">Content spend by top 12 media cos in 2024</span>
       <span class="source">Variety / KPMG, 2025</span>
     </div>
     <div class="stat-card">
-      <span class="num" style="color:var(--green);font-size:clamp(20px,4vw,28px);">$37B</span>
+      <span class="num">$37B</span>
       <span class="label">Enterprise GenAI spend in 2025 (+222% YoY)</span>
       <span class="source">Menlo Ventures, 2025</span>
     </div>
     <div class="stat-card">
-      <span class="num" style="color:var(--cyan);font-size:clamp(20px,4vw,28px);">207M</span>
+      <span class="num">207M</span>
       <span class="label">Active content creators worldwide</span>
       <span class="source">Creator economy data, 2025</span>
     </div>
@@ -860,12 +828,12 @@
     <div class="card reveal reveal-delay-2">
       <div class="section-header"><div class="dot"></div><span>Enterprise Signal</span></div>
       <div class="stat-card" style="background:transparent;border:none;padding:0;margin-bottom:12px;">
-        <span class="num" style="color:var(--blue-l);font-size:clamp(28px,6vw,42px);">68%</span>
+        <span class="num">68%</span>
         <span class="label">of CIOs actively planning AI vendor consolidation</span>
         <span class="source">SAP / NPI Research, 2025</span>
       </div>
       <div class="stat-card" style="background:transparent;border:none;padding:0;">
-        <span class="num" style="color:var(--purple-l);font-size:clamp(28px,6vw,42px);">76%</span>
+        <span class="num">76%</span>
         <span class="label">of AI use cases now purchased, not built internally</span>
         <span class="source">Menlo Ventures, 2025</span>
       </div>
@@ -873,9 +841,9 @@
 
     <div class="reveal reveal-delay-3">
       <div class="card" style="margin-bottom:12px;">
-        <div class="section-header"><div class="dot" style="background:var(--orange);"></div><span>M&A Signal</span></div>
+        <div class="section-header"><div class="dot"></div><span>M&A Signal</span></div>
         <div class="stat-card" style="background:transparent;border:none;padding:0;">
-          <span class="num" style="color:var(--orange);font-size:clamp(24px,5vw,36px);">427</span>
+          <span class="num">427</span>
           <span class="label">AI acquisitions in H1 2025 (+18% YoY)</span>
           <span class="source">LowTouch.ai</span>
         </div>
@@ -888,14 +856,14 @@
   </div>
 
   <div class="card mt-m reveal reveal-delay-4">
-    <div class="section-header"><div class="dot" style="background:var(--cyan);"></div><span>The Market Validated Our Thesis in Real Time</span></div>
+    <div class="section-header"><div class="dot"></div><span>The Market Validated Our Thesis in Real Time</span></div>
     <div class="comp-row">
       <div class="comp-icon">🚀</div>
       <div class="comp-body">
         <div class="comp-name">Luma AI — March 5, 2026</div>
         <div class="comp-detail">Launched "Luma Agents" with exact same framing: end the multi-tool mess. Raised $1.1B, valued at $4B.</div>
       </div>
-      <div class="comp-val" style="color:var(--cyan);">$4B</div>
+      <div class="comp-val">$4B</div>
     </div>
     <div class="comp-row">
       <div class="comp-icon">📰</div>
@@ -966,10 +934,10 @@
       <p class="eyebrow">The Figma Parallel</p>
       <p class="body-sm" style="color:var(--text);">
         Figma 2017: <em>"Design is fragmented across too many tools that don't share context."</em><br/>
-        By 2022: 90%+ market share. Adobe tried to buy at <strong style="color:var(--purple-l);">50× ARR</strong> — highest SaaS acquisition multiple ever.
+        By 2022: 90%+ market share. Adobe tried to buy at <strong>50× ARR</strong> — highest SaaS acquisition multiple ever.
       </p>
       <div style="height:12px;"></div>
-      <p class="body-sm" style="color:var(--purple-l); font-weight:600;">
+      <p class="body-sm" style="color:var(--navy); font-weight:600;">
         LFX Studio 2026: "AI media generation is fragmented across too many tools that don't share context. Put it all on one spatial canvas with a single intelligent agent."
       </p>
     </div>
@@ -996,27 +964,27 @@
       <tbody>
         <tr>
           <td><strong>Runway ML</strong></td>
-          <td style="color:var(--blue-l);">$5.3B · $90M ARR</td>
+          <td class="accent">$5.3B · $90M ARR</td>
           <td class="muted">Video only. No audio, image, 3D, agent, or canvas.</td>
         </tr>
         <tr>
           <td><strong>Luma AI</strong></td>
-          <td style="color:var(--blue-l);">$4B · $1.1B raised</td>
+          <td class="accent">$4B · $1.1B raised</td>
           <td class="muted">Just launched Mar 2026. No spatial canvas, no agent-first chat.</td>
         </tr>
         <tr>
           <td><strong>Adobe Firefly</strong></td>
-          <td style="color:var(--blue-l);">$22B total (Adobe)</td>
+          <td class="accent">$22B total (Adobe)</td>
           <td class="muted">Legacy UX. AI bolted onto old tools. Not agent-first.</td>
         </tr>
         <tr>
           <td><strong>Canva AI</strong></td>
-          <td style="color:var(--blue-l);">150M users</td>
+          <td class="accent">150M users</td>
           <td class="muted">Consumer/SMB. No professional generation pipeline.</td>
         </tr>
         <tr>
           <td><strong>Kling AI</strong></td>
-          <td style="color:var(--blue-l);">$240M ARR</td>
+          <td class="accent">$240M ARR</td>
           <td class="muted">Video only. Chinese co. (geopolitical risk). No platform.</td>
         </tr>
       </tbody>
@@ -1026,12 +994,12 @@
   <div class="mt-m reveal reveal-delay-3">
     <p class="eyebrow" style="margin-bottom:10px;">What LFX Studio uniquely has</p>
     <div class="pill-list">
-      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ Agent-first chat (not menu-driven)</span>
-      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ Spatial non-linear canvas</span>
-      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ 50+ models: video + image + audio + 3D</span>
-      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ Persistent creative context</span>
-      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ Enterprise: credits, auth, brand kits, consent</span>
-      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ Native integrations (not partnerships)</span>
+      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Agent-first chat (not menu-driven)</span>
+      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Spatial non-linear canvas</span>
+      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ 50+ models: video + image + audio + 3D</span>
+      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Persistent creative context</span>
+      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Enterprise: credits, auth, brand kits, consent</span>
+      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Native integrations (not partnerships)</span>
     </div>
   </div>
 
