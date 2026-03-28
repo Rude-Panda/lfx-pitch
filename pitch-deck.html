@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>LFX Studio — Acquirer Presentation 2026</title>
+  <style>
+    /* ─── Reset & base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #080810;
+      --surface:   #10101c;
+      --surface2:  #181828;
+      --border:    rgba(255,255,255,0.07);
+      --purple:    #7c3aed;
+      --purple-l:  #a78bfa;
+      --blue:      #2563eb;
+      --blue-l:    #60a5fa;
+      --cyan:      #06b6d4;
+      --green:     #10b981;
+      --orange:    #f59e0b;
+      --red:       #ef4444;
+      --text:      #f1f5f9;
+      --muted:     #94a3b8;
+      --muted2:    #475569;
+      --radius:    16px;
+      --radius-sm: 8px;
+      --grad:      linear-gradient(135deg, var(--purple), var(--blue));
+      --grad-text: linear-gradient(90deg, var(--purple-l), var(--blue-l));
+    }
+
+    html {
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Slide shell ─── */
+    .slide {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(48px, 8vw, 80px) clamp(20px, 5vw, 64px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ─── Noise texture overlay ─── */
+    .slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .slide > * { position: relative; z-index: 1; }
+
+    /* ─── Glow blobs ─── */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── Slide counter ─── */
+    .slide-num {
+      position: absolute;
+      bottom: 20px;
+      right: 24px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--muted2);
+      z-index: 2;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ─── Gradient text ─── */
+    .grad-text {
+      background: var(--grad-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── Tag / pill ─── */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: rgba(255,255,255,0.03);
+      margin-bottom: 20px;
+    }
+    .tag.purple { border-color: rgba(124,58,237,0.4); color: var(--purple-l); background: rgba(124,58,237,0.08); }
+    .tag.blue   { border-color: rgba(37,99,235,0.4);  color: var(--blue-l);   background: rgba(37,99,235,0.08); }
+    .tag.green  { border-color: rgba(16,185,129,0.4); color: var(--green);    background: rgba(16,185,129,0.08); }
+    .tag.orange { border-color: rgba(245,158,11,0.4); color: var(--orange);   background: rgba(245,158,11,0.08); }
+
+    /* ─── Typography ─── */
+    .eyebrow {
+      font-size: clamp(10px, 2vw, 12px);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 8vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: clamp(28px, 6vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      font-size: clamp(18px, 4vw, 28px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+    }
+
+    .body-lg {
+      font-size: clamp(15px, 2.5vw, 18px);
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 64ch;
+    }
+
+    .body-sm {
+      font-size: clamp(13px, 1.8vw, 15px);
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* ─── Stat card ─── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .stat-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-card .num {
+      font-size: clamp(24px, 5vw, 38px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .stat-card .label {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
+    /* ─── Source note ─── */
+    .source {
+      font-size: 10px;
+      color: var(--muted2);
+      margin-top: 2px;
+    }
+
+    /* ─── Divider ─── */
+    .divider {
+      width: 40px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--grad);
+      margin: 20px 0;
+    }
+
+    /* ─── Card / panel ─── */
+    .card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: clamp(16px, 3vw, 24px);
+    }
+
+    /* ─── Table ─── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(12px, 2vw, 14px);
+    }
+    .data-table th {
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text);
+      vertical-align: top;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table .accent { color: var(--purple-l); font-weight: 700; }
+    .data-table .muted  { color: var(--muted); }
+    .data-table .total td { background: rgba(124,58,237,0.06); font-weight: 700; }
+    .data-table .total td:first-child { border-radius: 8px 0 0 8px; }
+    .data-table .total td:last-child  { border-radius: 0 8px 8px 0; }
+
+    /* ─── Quote block ─── */
+    .quote {
+      border-left: 3px solid var(--purple);
+      padding: 12px 20px;
+      margin: 20px 0;
+      background: rgba(124,58,237,0.05);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+    .quote p {
+      font-size: clamp(14px, 2.2vw, 16px);
+      color: var(--text);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .quote .attribution {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+      font-style: normal;
+    }
+
+    /* ─── Highlight number (big lone stat) ─── */
+    .big-stat {
+      text-align: center;
+      padding: 28px 20px;
+    }
+    .big-stat .num {
+      font-size: clamp(48px, 12vw, 96px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .big-stat .caption {
+      font-size: clamp(13px, 2.5vw, 16px);
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ─── Pill list ─── */
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .pill {
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* ─── Comparison row ─── */
+    .comp-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .comp-row:last-child { border-bottom: none; }
+    .comp-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+    }
+    .comp-body { flex: 1; min-width: 0; }
+    .comp-name { font-size: 14px; font-weight: 700; }
+    .comp-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .comp-val { font-size: 13px; font-weight: 700; white-space: nowrap; text-align: right; }
+
+    /* ─── Animation base ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
+
+    /* ─── Progress bar ─── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--grad);
+      z-index: 100;
+      transition: width 0.3s ease;
+    }
+
+    /* ─── Nav dots ─── */
+    .nav-dots {
+      position: fixed;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 100;
+    }
+    .nav-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--muted2);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+    }
+    .nav-dot.active {
+      background: var(--purple-l);
+      transform: scale(1.4);
+    }
+
+    /* ─── Two-column layout helper ─── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 480px) {
+      .two-col { grid-template-columns: 1fr; }
+      .nav-dots { display: none; }
+    }
+
+    /* ─── Spacer ─── */
+    .mt-s  { margin-top: 12px; }
+    .mt-m  { margin-top: 20px; }
+    .mt-l  { margin-top: 32px; }
+    .mt-xl { margin-top: 48px; }
+
+    /* ─── Section header inside a slide ─── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-header .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--grad);
+      flex-shrink: 0;
+    }
+    .section-header span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─── Closer line ─── */
+    .closer {
+      margin-top: 28px;
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      background: rgba(124,58,237,0.08);
+      border: 1px solid rgba(124,58,237,0.25);
+      font-size: clamp(14px, 2.5vw, 17px);
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    /* ─── Scroll hint ─── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted2);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: bounce 2s ease infinite;
+    }
+    .scroll-hint svg { opacity: 0.5; }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── Gradient border card ─── */
+    .grad-card {
+      border-radius: var(--radius);
+      padding: 1px;
+      background: var(--grad);
+    }
+    .grad-card-inner {
+      border-radius: calc(var(--radius) - 1px);
+      background: var(--surface);
+      padding: clamp(16px, 3vw, 24px);
+    }
+
+    /* ─── Timeline row ─── */
+    .timeline { margin-top: 16px; }
+    .tl-item {
+      display: flex;
+      gap: 14px;
+      padding-bottom: 16px;
+      position: relative;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: 13px;
+      top: 28px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .tl-item:last-child::before { display: none; }
+    .tl-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .tl-dot.active { border-color: var(--purple); background: rgba(124,58,237,0.15); }
+    .tl-body { flex: 1; padding-top: 4px; }
+    .tl-date { font-size: 11px; color: var(--purple-l); font-weight: 700; }
+    .tl-title { font-size: 14px; font-weight: 600; margin-top: 1px; }
+    .tl-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+
+    /* ─── SLIDE 1: Cover ─── */
+    #cover { background: var(--bg); }
+    #cover .blob.a { width: 500px; height: 500px; background: var(--purple); top: -150px; right: -150px; opacity: 0.12; }
+    #cover .blob.b { width: 400px; height: 400px; background: var(--blue);   bottom: -100px; left: -100px; opacity: 0.1; }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.05em;
+      flex-shrink: 0;
+    }
+    .logo-name {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .logo-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.3);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--purple-l);
+      margin-bottom: 24px;
+    }
+
+    .cover-sub {
+      font-size: clamp(16px, 3.5vw, 22px);
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 16px;
+      max-width: 48ch;
+    }
+
+    .cover-footer {
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .cover-footer-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .cover-footer-item .val { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+    .cover-footer-item .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .cover-footer-sep { width: 1px; height: 32px; background: var(--border); }
+
+    /* ─── Confidence badge row ─── */
+    .conf-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .conf-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .conf-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
+  </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progress"></div>
+
+<!-- Nav dots -->
+<nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 0 — COVER
+═══════════════════════════════════════════════ -->
+<section class="slide" id="cover" data-slide="0">
+  <div class="blob a"></div>
+  <div class="blob b"></div>
+
+  <div class="logo reveal">
+    <div class="logo-mark">LX</div>
+    <div>
+      <div class="logo-name">LFX Studio</div>
+      <div class="logo-sub">AI Media Generation Platform</div>
+    </div>
+  </div>
+
+  <div class="cover-badge reveal reveal-delay-1">Acquirer Presentation · 2026</div>
+
+  <h1 class="reveal reveal-delay-2">
+    The Creative OS<br/>
+    <span class="grad-text">That Actually Exists.</span>
+  </h1>
+
+  <p class="cover-sub reveal reveal-delay-3">
+    One agent. One canvas. 50+ AI models across video, image, audio, and 3D.
+    The unified workspace creators have been waiting for — already built.
+  </p>
+
+  <div class="cover-footer reveal reveal-delay-4">
+    <div class="cover-footer-item">
+      <span class="val grad-text">50+</span>
+      <span class="lbl">AI Models</span>
+    </div>
+    <div class="cover-footer-sep"></div>
+    <div class="cover-footer-item">
+      <span class="val grad-text">4</span>
+      <span class="lbl">Media Types</span>
+    </div>
+    <div class="cover-footer-sep"></div>
+    <div class="cover-footer-item">
+      <span class="val grad-text">$132B</span>
+      <span class="lbl">TAM by 2030</span>
+    </div>
+    <div class="cover-footer-sep"></div>
+    <div class="cover-footer-item">
+      <span class="val grad-text">0</span>
+      <span class="lbl">Real Competitors</span>
+    </div>
+  </div>
+
+  <div class="conf-row reveal reveal-delay-5">
+    <div class="conf-badge"><span class="dot"></span> Agent-First Chat</div>
+    <div class="conf-badge"><span class="dot"></span> Spatial Canvas</div>
+    <div class="conf-badge"><span class="dot"></span> Enterprise-Ready</div>
+    <div class="conf-badge"><span class="dot"></span> Multi-Modal</div>
+    <div class="conf-badge"><span class="dot"></span> Claude-Powered</div>
+  </div>
+
+  <div class="scroll-hint">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Scroll
+  </div>
+  <div class="slide-num">01 / 07</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 1 — THE PROBLEM: TOOL CHAOS
+═══════════════════════════════════════════════ -->
+<section class="slide" id="problem-1" data-slide="1">
+  <div class="blob a" style="width:400px;height:400px;background:var(--red);top:-100px;right:-100px;opacity:0.08;"></div>
+
+  <div class="tag purple reveal">01 — The Problem</div>
+
+  <h2 class="reveal reveal-delay-1">
+    Creators Have<br/>
+    <span class="grad-text">50 AI Tools.</span><br/>
+    None Talk to Each Other.
+  </h2>
+
+  <div class="divider reveal reveal-delay-2"></div>
+
+  <p class="body-lg reveal reveal-delay-2">
+    To make one short-form ad: Midjourney → Runway → ElevenLabs → Suno → Firefly.
+    Five logins. Five uploads. Five interfaces. Zero shared context.
+  </p>
+
+  <div class="stat-grid mt-m reveal reveal-delay-3">
+    <div class="stat-card">
+      <span class="num grad-text" data-count="90000" data-suffix="K+">0</span>
+      <span class="label">AI platforms exist globally</span>
+      <span class="source">Ardion.io, 2026</span>
+    </div>
+    <div class="stat-card">
+      <span class="num" style="color:var(--orange);" data-count="432" data-suffix="+">0</span>
+      <span class="label">Image generation tools alone</span>
+      <span class="source">Flowlyn.com, 2026</span>
+    </div>
+    <div class="stat-card">
+      <span class="num" style="color:var(--cyan);" data-count="86" data-suffix="%">0</span>
+      <span class="label">Creators use GenAI in their work</span>
+      <span class="source">Adobe, Oct 2025 — 16K creators</span>
+    </div>
+    <div class="stat-card">
+      <span class="num" style="color:var(--purple-l);" data-count="60" data-suffix="%">0</span>
+      <span class="label">Use 3+ AI tools every 3 months</span>
+      <span class="source">Adobe, 2025</span>
+    </div>
+  </div>
+
+  <div class="closer reveal reveal-delay-4">
+    "The creator's current workflow is not a product. It's a patchwork."
+  </div>
+
+  <div class="slide-num">02 / 07</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 2 — THE PROBLEM: HIDDEN COSTS
+═══════════════════════════════════════════════ -->
+<section class="slide" id="problem-2" data-slide="2">
+  <div class="blob b" style="width:350px;height:350px;background:var(--orange);bottom:-80px;left:-80px;opacity:0.08;"></div>
+
+  <div class="tag orange reveal">01 — The Cost of Fragmentation</div>
+  <h2 class="reveal reveal-delay-1">Every Switch<br/><span class="grad-text">Has a Price Tag.</span></h2>
+  <div class="divider reveal reveal-delay-2"></div>
+
+  <div class="two-col mt-m">
+    <!-- Time cost -->
+    <div class="card reveal reveal-delay-2">
+      <div class="section-header">
+        <div class="dot"></div>
+        <span>Time Cost</span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Metric</th><th>Stat</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Focus recovery per switch</td><td class="accent">23 min</td></tr>
+          <tr><td>Weekly time lost to reorientation</td><td class="accent">~4 hrs</td></tr>
+          <tr><td>Annual work time lost to app-switching</td><td class="accent">9%</td></tr>
+          <tr><td>Productivity lost to context-switching</td><td class="accent">up to 40%</td></tr>
+          <tr><td>Workers who feel tools make them less productive</td><td class="accent">45%</td></tr>
+        </tbody>
+      </table>
+      <p class="body-sm mt-s">A 6-tool project → <strong style="color:var(--orange)">~1.9 hours lost</strong> to switching alone.</p>
+    </div>
+
+    <!-- Money cost -->
+    <div class="card reveal reveal-delay-3">
+      <div class="section-header">
+        <div class="dot" style="background:var(--orange);"></div>
+        <span>Money Cost</span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Tool</th><th>/mo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Midjourney Pro</td><td class="muted">$60</td></tr>
+          <tr><td>Runway Pro</td><td class="muted">$35</td></tr>
+          <tr><td>Adobe Firefly Pro</td><td class="muted">$30</td></tr>
+          <tr><td>ElevenLabs Creator</td><td class="muted">$22</td></tr>
+          <tr><td>Suno Pro</td><td class="muted">$10</td></tr>
+          <tr class="total"><td>5 tools subtotal</td><td class="accent">$157</td></tr>
+          <tr><td>+ ChatGPT Pro (for Sora)</td><td class="muted">+$200</td></tr>
+          <tr class="total"><td>Real monthly stack</td><td class="accent">$357</td></tr>
+        </tbody>
+      </table>
+      <p class="body-sm mt-s">That's <strong style="color:var(--orange)">$4,284/year</strong> — before team seats.</p>
+    </div>
+  </div>
+
+  <div class="stat-grid mt-m reveal reveal-delay-4" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="stat-card" style="text-align:center;">
+      <span class="num" style="color:var(--orange);font-size:clamp(20px,4vw,28px);">56%</span>
+      <span class="label">say they can't afford all the AI tools they want</span>
+    </div>
+    <div class="stat-card" style="text-align:center;">
+      <span class="num" style="color:var(--red);font-size:clamp(20px,4vw,28px);">54%</span>
+      <span class="label">believe AI pricing is becoming "a rip-off"</span>
+    </div>
+    <div class="stat-card" style="text-align:center;">
+      <span class="num" style="color:var(--purple-l);font-size:clamp(20px,4vw,28px);">61%</span>
+      <span class="label">cut other subscriptions to keep paying for AI tools</span>
+    </div>
+  </div>
+
+  <p class="source mt-s reveal reveal-delay-5">Bango consumer survey, Oct 2025 — 2,000 Americans</p>
+
+  <div class="slide-num">03 / 07</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 3 — THE OPPORTUNITY: MARKET SIZE
+═══════════════════════════════════════════════ -->
+<section class="slide" id="opportunity-1" data-slide="3">
+  <div class="blob a" style="width:500px;height:500px;background:var(--green);top:-150px;right:-150px;opacity:0.07;"></div>
+
+  <div class="tag green reveal">02 — The Opportunity</div>
+  <h2 class="reveal reveal-delay-1">A <span class="grad-text">$132B Market</span><br/>With No Clear Winner.</h2>
+  <div class="divider reveal reveal-delay-2"></div>
+
+  <div class="card reveal reveal-delay-2">
+    <table class="data-table">
+      <thead>
+        <tr><th>Segment</th><th>2024</th><th>Projected</th><th>CAGR</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Audio/Visual GenAI (combined)</td><td class="muted">$15.86B</td><td class="accent">$132.59B</td><td class="muted">52.9% by 2030</td></tr>
+        <tr><td>AI Image Generation</td><td class="muted">$8.7B</td><td class="accent">$60.8B</td><td class="muted">38.2% by 2030</td></tr>
+        <tr><td>AI Video Generation</td><td class="muted">$3.86B</td><td class="accent">$42.29B</td><td class="muted">32.2% by 2033</td></tr>
+        <tr><td>AI Music / Audio</td><td class="muted">$5.2B</td><td class="accent">$60.44B</td><td class="muted">— by 2034</td></tr>
+        <tr><td>AI 3D Asset Generation</td><td class="muted">$1.63B</td><td class="accent">$9.24B</td><td class="muted">24.3% by 2032</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="stat-grid mt-m reveal reveal-delay-3" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+    <div class="stat-card">
+      <span class="num grad-text" style="font-size:clamp(20px,4vw,28px);">$210B</span>
+      <span class="label">Content spend by top 12 media cos in 2024</span>
+      <span class="source">Variety / KPMG, 2025</span>
+    </div>
+    <div class="stat-card">
+      <span class="num" style="color:var(--green);font-size:clamp(20px,4vw,28px);">$37B</span>
+      <span class="label">Enterprise GenAI spend in 2025 (+222% YoY)</span>
+      <span class="source">Menlo Ventures, 2025</span>
+    </div>
+    <div class="stat-card">
+      <span class="num" style="color:var(--cyan);font-size:clamp(20px,4vw,28px);">207M</span>
+      <span class="label">Active content creators worldwide</span>
+      <span class="source">Creator economy data, 2025</span>
+    </div>
+  </div>
+
+  <div class="closer reveal reveal-delay-4">
+    "$132 billion market. Enterprise spend tripling. 68% of CIOs consolidating vendors. And no one has built the unified creative platform. Until now."
+  </div>
+
+  <div class="slide-num">04 / 07</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 4 — THE OPPORTUNITY: CONSOLIDATION WAVE
+═══════════════════════════════════════════════ -->
+<section class="slide" id="opportunity-2" data-slide="4">
+  <div class="blob b" style="width:400px;height:400px;background:var(--blue);bottom:-100px;left:-50px;opacity:0.09;"></div>
+
+  <div class="tag blue reveal">02 — The Consolidation Wave</div>
+  <h2 class="reveal reveal-delay-1">Enterprises Are<br/><span class="grad-text">Done Experimenting.</span></h2>
+  <div class="divider reveal reveal-delay-2"></div>
+
+  <div class="two-col mt-s">
+    <div class="card reveal reveal-delay-2">
+      <div class="section-header"><div class="dot"></div><span>Enterprise Signal</span></div>
+      <div class="stat-card" style="background:transparent;border:none;padding:0;margin-bottom:12px;">
+        <span class="num" style="color:var(--blue-l);font-size:clamp(28px,6vw,42px);">68%</span>
+        <span class="label">of CIOs actively planning AI vendor consolidation</span>
+        <span class="source">SAP / NPI Research, 2025</span>
+      </div>
+      <div class="stat-card" style="background:transparent;border:none;padding:0;">
+        <span class="num" style="color:var(--purple-l);font-size:clamp(28px,6vw,42px);">76%</span>
+        <span class="label">of AI use cases now purchased, not built internally</span>
+        <span class="source">Menlo Ventures, 2025</span>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-3">
+      <div class="card" style="margin-bottom:12px;">
+        <div class="section-header"><div class="dot" style="background:var(--orange);"></div><span>M&A Signal</span></div>
+        <div class="stat-card" style="background:transparent;border:none;padding:0;">
+          <span class="num" style="color:var(--orange);font-size:clamp(24px,5vw,36px);">427</span>
+          <span class="label">AI acquisitions in H1 2025 (+18% YoY)</span>
+          <span class="source">LowTouch.ai</span>
+        </div>
+      </div>
+      <div class="quote" style="margin:0;">
+        <p>"Enterprises will spend more on AI in 2026 — through fewer vendors."</p>
+        <span class="attribution">— VC consensus, TechCrunch, Dec 2025</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-m reveal reveal-delay-4">
+    <div class="section-header"><div class="dot" style="background:var(--cyan);"></div><span>The Market Validated Our Thesis in Real Time</span></div>
+    <div class="comp-row">
+      <div class="comp-icon">🚀</div>
+      <div class="comp-body">
+        <div class="comp-name">Luma AI — March 5, 2026</div>
+        <div class="comp-detail">Launched "Luma Agents" with exact same framing: end the multi-tool mess. Raised $1.1B, valued at $4B.</div>
+      </div>
+      <div class="comp-val" style="color:var(--cyan);">$4B</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-icon">📰</div>
+      <div class="comp-body">
+        <div class="comp-name">AdWeek headline, March 2026</div>
+        <div class="comp-detail">"Luma AI Agents Promise to End the Multi-Tool Mess"</div>
+      </div>
+    </div>
+    <div class="comp-row" style="border:none;">
+      <div class="comp-icon">⚡</div>
+      <div class="comp-body">
+        <div class="comp-name">OpenAI shut down standalone Sora, March 24, 2026</div>
+        <div class="comp-detail">Folded into ChatGPT. Signal: point solutions can't hold users. Integrated platforms win.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">05 / 07</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 5 — COMPARABLES: WHO OWNS THE WORKFLOW WINS
+═══════════════════════════════════════════════ -->
+<section class="slide" id="comparables" data-slide="5">
+  <div class="blob a" style="width:450px;height:450px;background:var(--purple);top:-100px;right:-100px;opacity:0.1;"></div>
+
+  <div class="tag purple reveal">02 — The Pattern That Always Wins</div>
+  <h2 class="reveal reveal-delay-1">Whoever Owns<br/>the <span class="grad-text">Workflow, Wins.</span></h2>
+  <div class="divider reveal reveal-delay-2"></div>
+
+  <div class="card reveal reveal-delay-2">
+    <table class="data-table">
+      <thead>
+        <tr><th>Platform</th><th>What They Unified</th><th>Outcome</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Figma</strong></td>
+          <td class="muted">Sketch, InVision, Adobe XD</td>
+          <td class="accent">Adobe bid $20B (50× ARR) · $1.05B rev 2025</td>
+        </tr>
+        <tr>
+          <td><strong>Slack</strong></td>
+          <td class="muted">Email, IRC, intranets</td>
+          <td class="accent">Salesforce acq. $27.7B</td>
+        </tr>
+        <tr>
+          <td><strong>Notion</strong></td>
+          <td class="muted">Notes, wikis, tasks, databases</td>
+          <td class="accent">$11B valuation</td>
+        </tr>
+        <tr>
+          <td><strong>Adobe CC</strong></td>
+          <td class="muted">Photo, video, design, PDF</td>
+          <td class="accent">$22B annual rev · 30M subscribers</td>
+        </tr>
+        <tr>
+          <td><strong>Artlist</strong></td>
+          <td class="muted">Stock → AI creative ecosystem</td>
+          <td class="accent">$260M ARR · 50M creators · +50% YoY</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grad-card mt-m reveal reveal-delay-3">
+    <div class="grad-card-inner">
+      <p class="eyebrow">The Figma Parallel</p>
+      <p class="body-sm" style="color:var(--text);">
+        Figma 2017: <em>"Design is fragmented across too many tools that don't share context."</em><br/>
+        By 2022: 90%+ market share. Adobe tried to buy at <strong style="color:var(--purple-l);">50× ARR</strong> — highest SaaS acquisition multiple ever.
+      </p>
+      <div style="height:12px;"></div>
+      <p class="body-sm" style="color:var(--purple-l); font-weight:600;">
+        LFX Studio 2026: "AI media generation is fragmented across too many tools that don't share context. Put it all on one spatial canvas with a single intelligent agent."
+      </p>
+    </div>
+  </div>
+
+  <div class="slide-num">06 / 07</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 6 — COMPETITIVE GAPS
+═══════════════════════════════════════════════ -->
+<section class="slide" id="competition" data-slide="6">
+  <div class="blob b" style="width:400px;height:400px;background:var(--purple);bottom:-80px;right:-80px;opacity:0.1;"></div>
+
+  <div class="tag purple reveal">02 — Competitive Landscape</div>
+  <h2 class="reveal reveal-delay-1"><span class="grad-text">Everyone's Partial.</span><br/>We're Complete.</h2>
+  <div class="divider reveal reveal-delay-2"></div>
+
+  <div class="card reveal reveal-delay-2">
+    <table class="data-table">
+      <thead>
+        <tr><th>Competitor</th><th>Valuation/ARR</th><th>Gap</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Runway ML</strong></td>
+          <td style="color:var(--blue-l);">$5.3B · $90M ARR</td>
+          <td class="muted">Video only. No audio, image, 3D, agent, or canvas.</td>
+        </tr>
+        <tr>
+          <td><strong>Luma AI</strong></td>
+          <td style="color:var(--blue-l);">$4B · $1.1B raised</td>
+          <td class="muted">Just launched Mar 2026. No spatial canvas, no agent-first chat.</td>
+        </tr>
+        <tr>
+          <td><strong>Adobe Firefly</strong></td>
+          <td style="color:var(--blue-l);">$22B total (Adobe)</td>
+          <td class="muted">Legacy UX. AI bolted onto old tools. Not agent-first.</td>
+        </tr>
+        <tr>
+          <td><strong>Canva AI</strong></td>
+          <td style="color:var(--blue-l);">150M users</td>
+          <td class="muted">Consumer/SMB. No professional generation pipeline.</td>
+        </tr>
+        <tr>
+          <td><strong>Kling AI</strong></td>
+          <td style="color:var(--blue-l);">$240M ARR</td>
+          <td class="muted">Video only. Chinese co. (geopolitical risk). No platform.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-m reveal reveal-delay-3">
+    <p class="eyebrow" style="margin-bottom:10px;">What LFX Studio uniquely has</p>
+    <div class="pill-list">
+      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ Agent-first chat (not menu-driven)</span>
+      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ Spatial non-linear canvas</span>
+      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ 50+ models: video + image + audio + 3D</span>
+      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ Persistent creative context</span>
+      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ Enterprise: credits, auth, brand kits, consent</span>
+      <span class="pill" style="border-color:rgba(124,58,237,0.4);color:var(--purple-l);">✓ Native integrations (not partnerships)</span>
+    </div>
+  </div>
+
+  <div class="closer reveal reveal-delay-4">
+    "207 million creators. 900+ AI media tools. Zero unified workspace. That's the gap we're filling."
+  </div>
+
+  <div class="slide-num">07 / 07</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════ -->
+<script>
+  /* ── Slide data ── */
+  const SLIDE_IDS = ['cover','problem-1','problem-2','opportunity-1','opportunity-2','comparables','competition'];
+  const SLIDE_COUNT = SLIDE_IDS.length;
+
+  /* ── Build nav dots ── */
+  const navDots = document.getElementById('navDots');
+  SLIDE_IDS.forEach((id, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    btn.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    btn.addEventListener('click', () => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    });
+    navDots.appendChild(btn);
+  });
+
+  /* ── Scroll progress + active dot ── */
+  const progress = document.getElementById('progress');
+  const dots = navDots.querySelectorAll('.nav-dot');
+
+  function onScroll() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progress.style.width = pct + '%';
+
+    // active dot
+    let active = 0;
+    SLIDE_IDS.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.4) active = i;
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === active));
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ── Reveal on scroll (Intersection Observer) ── */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* ── Animated number counters ── */
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.count, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1400;
+    const start = performance.now();
+
+    function step(now) {
+      const elapsed = Math.min(now - start, duration);
+      const progress = elapsed / duration;
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+
+      // Format large numbers
+      if (target >= 1000) {
+        if (target >= 90000) {
+          el.textContent = (current >= 90000 ? '90' : Math.round(current / 1000)) + 'K' + (suffix.replace('K+','') ? '' : '+');
+        } else {
+          el.textContent = current.toLocaleString() + suffix;
+        }
+      } else {
+        el.textContent = current + suffix;
+      }
+
+      if (elapsed < duration) requestAnimationFrame(step);
+      else {
+        // Final clean value
+        if (target === 90000) el.textContent = '90,000+';
+        else el.textContent = target.toLocaleString() + suffix;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounter(e.target);
+        counterObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+  /* ── Keyboard navigation ── */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+      e.preventDefault();
+      const active = Array.from(dots).findIndex(d => d.classList.contains('active'));
+      const next = Math.min(active + 1, SLIDE_COUNT - 1);
+      document.getElementById(SLIDE_IDS[next])?.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      const active = Array.from(dots).findIndex(d => d.classList.contains('active'));
+      const prev = Math.max(active - 1, 0);
+      document.getElementById(SLIDE_IDS[prev])?.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+
+  // init
+  onScroll();
+</script>
+</body>
+</html>
