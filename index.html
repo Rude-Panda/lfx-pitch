@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>LFX Studio — Acquirer Presentation 2026</title>
   <style>
     /* ─── Reset & base ─── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
-      --bg:        #ffffff;
-      --surface:   #f7f8fa;
-      --surface2:  #f0f2f5;
-      --border:    #dde1e8;
-      --border-l:  #eaecf0;
-      --navy:      #1b2f55;
-      --navy-l:    #2c4a80;
-      --accent:    #1e3a6e;
-      --blue:      #2155a3;
-      --green:     #1a6b3a;
-      --orange:    #a85a00;
-      --red:       #b91c1c;
-      --text:      #111827;
-      --muted:     #5a6478;
-      --muted2:    #9aa0ad;
-      --radius:    5px;
+      --bg: #ffffff;
+      --surface: #f7f8fa;
+      --surface2: #f0f2f5;
+      --border: #dde1e8;
+      --border-l: #eaecf0;
+      --navy: #1b2f55;
+      --navy-l: #2c4a80;
+      --accent: #1e3a6e;
+      --blue: #2155a3;
+      --green: #1a6b3a;
+      --orange: #a85a00;
+      --red: #b91c1c;
+      --text: #111827;
+      --muted: #5a6478;
+      --muted2: #9aa0ad;
+      --radius: 5px;
       --radius-sm: 3px;
-      --rule:      #c8cdd8;
+      --rule: #c8cdd8;
     }
 
     html {
@@ -38,12 +45,9 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── Page wrapper — max width on desktop ─── */
+    /* ─── Page wrapper ─── */
     body {
-      max-width: 900px;
-      margin: 0 auto;
-      border-left: 1px solid var(--border-l);
-      border-right: 1px solid var(--border-l);
+      margin: 0;
     }
 
     /* ─── Slide shell ─── */
@@ -52,17 +56,30 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
       padding: clamp(40px, 7vw, 72px) clamp(24px, 5vw, 56px);
       position: relative;
       border-bottom: 1px solid var(--border);
     }
 
+    .slide>*:not(.slide-num):not(.blob) {
+      width: 100%;
+      max-width: 1100px;
+    }
+
     /* Alternating subtle backgrounds */
-    .slide:nth-child(odd)  { background: var(--bg); }
-    .slide:nth-child(even) { background: var(--surface); }
+    .slide:nth-child(odd) {
+      background: var(--bg);
+    }
+
+    .slide:nth-child(even) {
+      background: var(--surface);
+    }
 
     /* ─── Blobs: hidden in light mode ─── */
-    .blob { display: none; }
+    .blob {
+      display: none;
+    }
 
     /* ─── Slide counter ─── */
     .slide-num {
@@ -77,7 +94,9 @@
     }
 
     /* ─── Accent text (replaces gradient text) ─── */
-    .grad-text { color: var(--navy); }
+    .grad-text {
+      color: var(--navy);
+    }
 
     /* ─── Tag / section label ─── */
     .tag {
@@ -95,10 +114,26 @@
       background: transparent;
       margin-bottom: 16px;
     }
-    .tag.purple { border-color: #b8c6e0; color: var(--navy-l); }
-    .tag.blue   { border-color: #b8c6e0; color: var(--blue); }
-    .tag.green  { border-color: #b8d4be; color: var(--green); }
-    .tag.orange { border-color: #d9c0a0; color: var(--orange); }
+
+    .tag.purple {
+      border-color: #b8c6e0;
+      color: var(--navy-l);
+    }
+
+    .tag.blue {
+      border-color: #b8c6e0;
+      color: var(--blue);
+    }
+
+    .tag.green {
+      border-color: #b8d4be;
+      color: var(--green);
+    }
+
+    .tag.orange {
+      border-color: #d9c0a0;
+      color: var(--orange);
+    }
 
     /* ─── Typography ─── */
     .eyebrow {
@@ -165,7 +200,10 @@
       flex-direction: column;
       gap: 4px;
     }
-    .slide:nth-child(even) .stat-card { background: var(--surface); }
+
+    .slide:nth-child(even) .stat-card {
+      background: var(--surface);
+    }
 
     .stat-card .num {
       font-size: clamp(22px, 4vw, 32px);
@@ -206,7 +244,10 @@
       border-radius: var(--radius);
       padding: clamp(14px, 2.5vw, 20px);
     }
-    .slide:nth-child(even) .card { background: var(--bg); }
+
+    .slide:nth-child(even) .card {
+      background: var(--bg);
+    }
 
     /* ─── Table ─── */
     .data-table {
@@ -214,6 +255,7 @@
       border-collapse: collapse;
       font-size: clamp(11px, 1.8vw, 13px);
     }
+
     .data-table th {
       text-align: left;
       padding: 8px 12px;
@@ -225,16 +267,31 @@
       border-bottom: 1px solid var(--border);
       background: var(--surface2);
     }
+
     .data-table td {
       padding: 9px 12px;
       border-bottom: 1px solid var(--border-l);
       color: var(--text);
       vertical-align: top;
     }
-    .data-table tr:last-child td { border-bottom: none; }
-    .data-table .accent { color: var(--navy); font-weight: 600; }
-    .data-table .muted  { color: var(--muted); }
-    .data-table .total td { background: #eef1f8; font-weight: 600; }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table .accent {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .data-table .muted {
+      color: var(--muted);
+    }
+
+    .data-table .total td {
+      background: #eef1f8;
+      font-weight: 600;
+    }
 
     /* ─── Quote block ─── */
     .quote {
@@ -243,12 +300,14 @@
       margin: 16px 0;
       background: var(--surface);
     }
+
     .quote p {
       font-size: clamp(13px, 2vw, 15px);
       color: var(--text);
       font-style: italic;
       line-height: 1.6;
     }
+
     .quote .attribution {
       font-size: 10px;
       color: var(--muted);
@@ -263,6 +322,7 @@
       gap: 6px;
       margin-top: 12px;
     }
+
     .pill {
       padding: 4px 10px;
       border-radius: var(--radius-sm);
@@ -281,7 +341,11 @@
       padding: 12px 0;
       border-bottom: 1px solid var(--border-l);
     }
-    .comp-row:last-child { border-bottom: none; }
+
+    .comp-row:last-child {
+      border-bottom: none;
+    }
+
     .comp-icon {
       width: 30px;
       height: 30px;
@@ -294,10 +358,30 @@
       background: var(--surface2);
       border: 1px solid var(--border);
     }
-    .comp-body { flex: 1; min-width: 0; }
-    .comp-name { font-size: 13px; font-weight: 600; }
-    .comp-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
-    .comp-val { font-size: 12px; font-weight: 600; white-space: nowrap; text-align: right; color: var(--navy); }
+
+    .comp-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .comp-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .comp-detail {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .comp-val {
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      text-align: right;
+      color: var(--navy);
+    }
 
     /* ─── Animation base ─── */
     .reveal {
@@ -305,16 +389,35 @@
       transform: translateY(18px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
+
     .reveal.visible {
       opacity: 1;
       transform: none;
     }
-    .reveal-delay-1 { transition-delay: 0.08s; }
-    .reveal-delay-2 { transition-delay: 0.16s; }
-    .reveal-delay-3 { transition-delay: 0.24s; }
-    .reveal-delay-4 { transition-delay: 0.32s; }
-    .reveal-delay-5 { transition-delay: 0.40s; }
-    .reveal-delay-6 { transition-delay: 0.48s; }
+
+    .reveal-delay-1 {
+      transition-delay: 0.08s;
+    }
+
+    .reveal-delay-2 {
+      transition-delay: 0.16s;
+    }
+
+    .reveal-delay-3 {
+      transition-delay: 0.24s;
+    }
+
+    .reveal-delay-4 {
+      transition-delay: 0.32s;
+    }
+
+    .reveal-delay-5 {
+      transition-delay: 0.40s;
+    }
+
+    .reveal-delay-6 {
+      transition-delay: 0.48s;
+    }
 
     /* ─── Progress bar ─── */
     .progress-bar {
@@ -339,6 +442,7 @@
       gap: 7px;
       z-index: 100;
     }
+
     .nav-dot {
       width: 5px;
       height: 5px;
@@ -348,6 +452,7 @@
       transition: background 0.2s, transform 0.2s;
       border: none;
     }
+
     .nav-dot.active {
       background: var(--navy);
       transform: scale(1.5);
@@ -359,16 +464,33 @@
       grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
+
     @media (max-width: 520px) {
-      .two-col { grid-template-columns: 1fr; }
-      .nav-dots { display: none; }
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-dots {
+        display: none;
+      }
     }
 
     /* ─── Spacer ─── */
-    .mt-s  { margin-top: 10px; }
-    .mt-m  { margin-top: 18px; }
-    .mt-l  { margin-top: 28px; }
-    .mt-xl { margin-top: 44px; }
+    .mt-s {
+      margin-top: 10px;
+    }
+
+    .mt-m {
+      margin-top: 18px;
+    }
+
+    .mt-l {
+      margin-top: 28px;
+    }
+
+    .mt-xl {
+      margin-top: 44px;
+    }
 
     /* ─── Section header inside a slide ─── */
     .section-header {
@@ -377,6 +499,7 @@
       gap: 8px;
       margin-bottom: 12px;
     }
+
     .section-header .dot {
       width: 6px;
       height: 6px;
@@ -385,6 +508,7 @@
       opacity: 0.5;
       flex-shrink: 0;
     }
+
     .section-header span {
       font-size: 10px;
       font-weight: 600;
@@ -408,25 +532,6 @@
     }
 
     /* ─── Scroll hint ─── */
-    .scroll-hint {
-      position: absolute;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      color: var(--muted2);
-      font-size: 9px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      animation: bounce 2s ease infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50%       { transform: translateX(-50%) translateY(5px); }
-    }
 
     /* ─── Highlight card (replaces grad-card) ─── */
     .grad-card {
@@ -434,18 +539,23 @@
       border: 1px solid #b8c6e0;
       background: #f0f4fb;
     }
+
     .grad-card-inner {
       padding: clamp(14px, 2.5vw, 20px);
     }
 
     /* ─── Timeline row ─── */
-    .timeline { margin-top: 14px; }
+    .timeline {
+      margin-top: 14px;
+    }
+
     .tl-item {
       display: flex;
       gap: 12px;
       padding-bottom: 14px;
       position: relative;
     }
+
     .tl-item::before {
       content: '';
       position: absolute;
@@ -455,7 +565,11 @@
       width: 1px;
       background: var(--border);
     }
-    .tl-item:last-child::before { display: none; }
+
+    .tl-item:last-child::before {
+      display: none;
+    }
+
     .tl-dot {
       width: 24px;
       height: 24px;
@@ -468,25 +582,75 @@
       font-size: 11px;
       flex-shrink: 0;
     }
-    .tl-dot.active { border-color: var(--navy); background: #eef1f8; }
-    .tl-body { flex: 1; padding-top: 3px; }
-    .tl-date  { font-size: 10px; color: var(--navy); font-weight: 600; }
-    .tl-title { font-size: 13px; font-weight: 600; margin-top: 1px; }
-    .tl-desc  { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+
+    .tl-dot.active {
+      border-color: var(--navy);
+      background: #eef1f8;
+    }
+
+    .tl-body {
+      flex: 1;
+      padding-top: 3px;
+    }
+
+    .tl-date {
+      font-size: 10px;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .tl-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+
+    .tl-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.5;
+    }
 
     /* ─── Cover slide ─── */
     #cover {
       background: var(--navy);
       color: #fff;
     }
-    #cover h1, #cover .grad-text { color: #fff; }
-    #cover .cover-sub    { color: rgba(255,255,255,0.65); }
-    #cover .cover-footer-item .lbl { color: rgba(255,255,255,0.45); }
-    #cover .cover-footer-sep { background: rgba(255,255,255,0.2); }
-    #cover .conf-badge   { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.65); }
-    #cover .scroll-hint  { color: rgba(255,255,255,0.3); }
-    #cover .slide-num    { color: rgba(255,255,255,0.25); }
-    #cover .cover-badge  { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); border-radius: var(--radius-sm); }
+
+    #cover h1,
+    #cover .grad-text {
+      color: #fff;
+    }
+
+    #cover .cover-sub {
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    #cover .cover-footer-item .lbl {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    #cover .cover-footer-sep {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    #cover .conf-badge {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    #cover .slide-num {
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    #cover .cover-badge {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius-sm);
+    }
 
     .logo {
       display: flex;
@@ -494,21 +658,30 @@
       gap: 10px;
       margin-bottom: 36px;
     }
+
     .logo-mark {
       width: 36px;
       height: 36px;
-      border-radius: var(--radius);
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--navy);
       flex-shrink: 0;
+      color: #fff;
     }
-    .logo-name { font-size: 15px; font-weight: 600; color: #fff; }
-    .logo-sub  { font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+
+    .logo-mark svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .logo-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.45);
+      margin-top: 1px;
+    }
 
     .cover-badge {
       display: inline-flex;
@@ -536,14 +709,30 @@
       gap: 20px;
       flex-wrap: wrap;
     }
+
     .cover-footer-item {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
-    .cover-footer-item .val { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: #fff; }
-    .cover-footer-item .lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; }
-    .cover-footer-sep { width: 1px; height: 28px; }
+
+    .cover-footer-item .val {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .cover-footer-item .lbl {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .cover-footer-sep {
+      width: 1px;
+      height: 28px;
+    }
 
     /* ─── Confidence badge row ─── */
     .conf-row {
@@ -552,6 +741,7 @@
       gap: 6px;
       margin-top: 20px;
     }
+
     .conf-badge {
       display: flex;
       align-items: center;
@@ -561,45 +751,81 @@
       font-size: 10px;
       font-weight: 500;
     }
-    .conf-badge .dot { width: 4px; height: 4px; border-radius: 50%; background: #6ee7a0; }
+
+    .conf-badge .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #6ee7a0;
+    }
   </style>
 </head>
+
 <body>
 
-<!-- Progress bar -->
-<div class="progress-bar" id="progress"></div>
+  <!-- Progress bar -->
+  <div class="progress-bar" id="progress"></div>
 
-<!-- Nav dots -->
-<nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+  <!-- Nav dots -->
+  <nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
 
-<!-- ═══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
      SLIDE 0 — COVER
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="cover" data-slide="0">
-  <div class="blob a"></div>
-  <div class="blob b"></div>
+  <section class="slide" id="cover" data-slide="0">
+    <div class="blob a"></div>
+    <div class="blob b"></div>
 
-  <div class="logo reveal">
-    <div class="logo-mark">LX</div>
-    <div>
-      <div class="logo-name">LFX Studio</div>
-      <div class="logo-sub">AI Media Generation Platform</div>
+    <div class="logo reveal">
+      <div class="logo-mark"><svg width="95" height="95" viewBox="0 0 95 95" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M46.5212 16.285C45.3149 18.8435 44.8343 21.6938 45.0108 24.5345C44.4126 26.0618 43.6966 27.521 42.8237 28.9024C41.9999 31.3442 40.7739 34.1946 41.176 37.0449C37.096 37.0449 33.2023 35.3328 30.2404 32.5991C28.014 30.5562 26.3074 27.9588 25.4051 25.0793C25.0815 24.0773 24.8657 23.0363 24.7578 21.976C24.7578 17.9096 25.9936 14.2421 28.0434 10.5843C29.6911 7.32532 30.5052 3.6578 30.9171 0C39.136 0.729614 46.6782 7.20858 47.0312 15.4289C46.8547 15.711 46.688 16.0029 46.5212 16.285Z"
+            fill="currentColor" />
+          <path
+            d="M70.3773 24.4172C70.0639 24.8276 69.7406 25.2175 69.3782 25.5869C66.2145 26.4591 63.5209 28.3984 61.4443 30.9533C60.0829 31.5484 58.6724 32.082 57.2619 32.5745C54.392 33.8673 51.9335 34.719 49.8863 37.3047C47.2711 34.0623 45.7529 29.958 45.508 25.8229C45.3317 22.8268 45.8117 19.8204 47.0164 17.1218C47.1829 16.8243 47.3495 16.5164 47.5258 16.2189C49.1517 13.5306 51.4046 10.9756 53.9806 9.81618C59.3091 7.67168 64.6375 5.94788 69.1432 2.08984C74.4814 8.10263 75.2944 17.5425 70.3773 24.4172Z"
+            fill="currentColor" />
+          <path
+            d="M95 31.1411C94.5946 37.5927 89.7493 43.2911 83.6879 45.5686C82.3655 45.9407 80.995 46.1494 79.6244 46.2129C78.6302 45.6412 77.5685 45.1694 76.4199 44.8064C74.3737 44.262 72.173 44.0079 69.9917 44.1168C66.073 42.4018 62.106 40.6324 57.8398 40.6324C58.2549 37.1117 59.8571 33.582 62.3666 30.8417C64.4128 28.5823 67.0671 26.8673 70.1847 26.096C70.6384 25.9871 71.1017 25.8964 71.5746 25.8238C78.0318 25.0616 83.2921 28.4824 88.9386 30.3789C90.9655 30.76 92.9827 31.5131 95 31.1411Z"
+            fill="currentColor" />
+          <path
+            d="M36.4097 45.0504C33.0897 47.483 29.2097 49.2123 25.1497 49.4956C23.0797 49.6519 20.9497 49.4272 18.8297 48.7336C18.0297 48.4112 17.2597 48.0204 16.5297 47.571C12.6497 45.2458 9.71969 41.4063 7.94969 37.2834C6.27969 33.1997 5.43969 28.6958 1.67969 25.8333C7.52969 21.3392 15.4897 19.2974 22.1797 23.7914C23.1597 24.3288 24.0797 24.9638 24.9297 25.677C25.8497 28.5688 27.5897 31.1774 29.8597 33.229C31.4697 37.4886 32.9197 41.9827 36.4097 45.0504Z"
+            fill="currentColor" />
+          <path
+            d="M48.2665 78.2598C48.2105 78.3698 48.1545 78.4898 48.0798 78.5998C45.2895 83.8198 39.5596 86.6699 34.2029 88.2999C31.4686 89.1399 29.5182 91.2298 27.5677 92.8998C22.491 87.8798 21.3152 79.0898 25.2254 72.8098C25.9159 72.0698 26.2986 70.9998 26.9238 70.1898C27.2691 70.1098 27.6144 70.0098 27.9597 69.8898C30.6194 68.8098 33.0177 67.0498 34.8655 64.8298H34.8748C36.1907 64.2398 37.5438 63.7098 38.897 63.1898C41.2394 62.3498 43.9737 61.0998 45.9241 58.5898C48.2851 61.5798 49.7036 65.3298 49.9743 69.1498C50.2076 72.2798 49.6756 75.4398 48.2665 78.2598Z"
+            fill="currentColor" />
+          <path
+            d="M38.09 53.9802C38.09 58.0602 36.44 61.8602 33.78 64.8302H33.77C31.79 67.0502 29.22 68.8102 26.37 69.8902C26 70.0102 25.63 70.1102 25.26 70.1902C18.97 71.5702 13.04 68.0702 7.12 65.7002C5.02 64.8602 2.51 64.4402 0 64.4402C0.42 58.1702 4.19 51.8902 10.05 49.3802C12.22 48.4902 14.38 48.1402 16.53 48.1902C17.26 48.6502 18.03 49.0502 18.83 49.3802C20.95 50.0902 23.08 50.3202 25.15 50.1602C27 50.9102 28.81 51.8002 30.55 52.7302C33.06 53.9802 35.57 53.9802 38.09 53.9802Z"
+            fill="currentColor" />
+          <path
+            d="M92.9099 68.6171C88.0441 73.135 81.1429 74.3725 75.0656 71.9073C73.3985 71.2689 72.0027 70.3653 70.8105 69.2751C70.0448 65.7983 68.1256 62.8617 65.528 60.701C65.0046 59.3751 64.549 58.0295 64.1129 56.6938C63.2987 54.2286 61.0847 51.1045 60.7301 50.7064C60.4072 50.2977 60.0159 49.8233 59.6445 49.2982C62.2422 46.4107 65.9835 45.0357 69.8219 44.8491C72.0124 44.7312 74.2223 45.0062 76.2772 45.5955C77.4306 45.9883 78.4968 46.4991 79.4952 47.1178C81.6469 48.4732 83.411 50.3393 84.7971 52.5884C88.0441 57.9313 88.4512 64.5019 92.9099 68.6171Z"
+            fill="currentColor" />
+          <path
+            d="M65.4998 88.7202C65.0969 90.8102 64.2911 92.9002 64.694 95.0002C57.4711 94.5802 50.6414 89.5502 49.0395 81.6002C48.9436 80.6002 48.8668 79.6002 48.8477 78.6002C48.9244 78.4902 48.9819 78.3702 49.0395 78.2602C50.4879 75.4402 51.0347 72.2802 50.7949 69.1602C52.7421 65.4402 54.2673 60.9902 54.6605 56.9102C58.4783 57.1202 62.0849 58.5802 64.8955 60.9902C67.4662 63.1902 69.3654 66.1802 70.1232 69.7202C70.2 70.0502 70.2671 70.3802 70.3151 70.7202C71.1208 77.4202 67.9074 82.8602 65.4998 88.7202Z"
+            fill="currentColor" />
+        </svg></div>
+      <div>
+        <div class="logo-name">LFX Studio</div>
+        <div class="logo-sub">AI Media Generation Platform</div>
+      </div>
     </div>
-  </div>
 
-  <div class="cover-badge reveal reveal-delay-1">Acquirer Presentation · 2026</div>
+    <!-- <div class="cover-badge reveal reveal-delay-1">Acquirer Presentation · 2026</div> -->
 
-  <h1 class="reveal reveal-delay-2">
-    The Creative OS<br/>
-    <span class="grad-text">That Actually Exists.</span>
-  </h1>
+    <h1 class="reveal reveal-delay-2">
+      Agentic Creative Studio.
+      <!-- One Canvas. One Agent.<br/>
+    <span class="grad-text">Every Medium.</span> -->
+    </h1>
 
-  <p class="cover-sub reveal reveal-delay-3">
-    One agent. One canvas. 50+ AI models across video, image, audio, and 3D.
-    The unified workspace creators have been waiting for — already built.
-  </p>
+    <p class="cover-sub reveal reveal-delay-3">
+      Multi-Agent. One Canvas. 50+ AI models and tools for Generation and Editing across Video, Image, Music, Speech,
+      and 3D.
+      <!-- One agent. One canvas. 50+ AI models across Video, Image, Music, Speech, and 3D. -->
+      <!-- The unified workspace creators have been waiting for — already built. -->
+    </p>
 
-  <div class="cover-footer reveal reveal-delay-4">
+    <!-- <div class="cover-footer reveal reveal-delay-4">
     <div class="cover-footer-item">
       <span class="val grad-text">50+</span>
       <span class="lbl">AI Models</span>
@@ -619,1129 +845,1622 @@
       <span class="val grad-text">0</span>
       <span class="lbl">Real Competitors</span>
     </div>
-  </div>
+  </div> -->
 
-  <div class="conf-row reveal reveal-delay-5">
-    <div class="conf-badge"><span class="dot"></span> Agent-First Chat</div>
-    <div class="conf-badge"><span class="dot"></span> Spatial Canvas</div>
-    <div class="conf-badge"><span class="dot"></span> Enterprise-Ready</div>
-    <div class="conf-badge"><span class="dot"></span> Multi-Modal</div>
-    <div class="conf-badge"><span class="dot"></span> Claude-Powered</div>
-  </div>
+    <div class="conf-row reveal reveal-delay-5">
+      <div class="conf-badge"><span class="dot"></span> Agentic</div>
+      <div class="conf-badge"><span class="dot"></span> Spatial Canvas</div>
+      <div class="conf-badge"><span class="dot"></span> Enterprise-Ready</div>
+      <div class="conf-badge"><span class="dot"></span> Multi-Modal</div>
+      <!-- <div class="conf-badge"><span class="dot"></span> Claude-Powered</div> -->
+    </div>
 
-  <div class="scroll-hint">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-    Scroll
-  </div>
-  <div class="slide-num">01 / 18</div>
-</section>
+    <div class="slide-num">01 / 14</div>
+  </section>
 
-<!-- ═══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
      SLIDE 1 — THE PROBLEM: TOOL CHAOS
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="problem-1" data-slide="1">
-  <div class="blob a" style="width:400px;height:400px;background:var(--red);top:-100px;right:-100px;opacity:0.08;"></div>
-
-  <div class="tag purple reveal">01 — The Problem</div>
-
-  <h2 class="reveal reveal-delay-1">
-    Creators Have<br/>
-    <span class="grad-text">50 AI Tools.</span><br/>
-    None Talk to Each Other.
-  </h2>
-
-  <div class="divider reveal reveal-delay-2"></div>
-
-  <p class="body-lg reveal reveal-delay-2">
-    To make one short-form ad: Midjourney → Runway → ElevenLabs → Suno → Firefly.
-    Five logins. Five uploads. Five interfaces. Zero shared context.
-  </p>
-
-  <div class="stat-grid mt-m reveal reveal-delay-3">
-    <div class="stat-card">
-      <span class="num grad-text" data-count="90000" data-suffix="K+">0</span>
-      <span class="label">AI platforms exist globally</span>
-      <span class="source">Ardion.io, 2026</span>
+  <section class="slide" id="problem-1" data-slide="1">
+    <div class="blob a" style="width:400px;height:400px;background:var(--red);top:-100px;right:-100px;opacity:0.08;">
     </div>
-    <div class="stat-card">
-      <span class="num" data-count="432" data-suffix="+">0</span>
-      <span class="label">Image generation tools alone</span>
-      <span class="source">Flowlyn.com, 2026</span>
-    </div>
-    <div class="stat-card">
-      <span class="num" data-count="86" data-suffix="%">0</span>
-      <span class="label">Creators use GenAI in their work</span>
-      <span class="source">Adobe, Oct 2025 — 16K creators</span>
-    </div>
-    <div class="stat-card">
-      <span class="num" data-count="60" data-suffix="%">0</span>
-      <span class="label">Use 3+ AI tools every 3 months</span>
-      <span class="source">Adobe, 2025</span>
-    </div>
-  </div>
 
-  <div class="closer reveal reveal-delay-4">
-    "The creator's current workflow is not a product. It's a patchwork."
-  </div>
+    <div class="tag purple reveal">01 — The Problem</div>
 
-  <div class="slide-num">02 / 18</div>
-</section>
+    <h2 class="reveal reveal-delay-1">
+      Creators Have<br />
+      <span class="grad-text">50 AI Tools.</span><br />
+      None Talk to Each Other.
+    </h2>
 
-<!-- ═══════════════════════════════════════════════
+    <div class="divider reveal reveal-delay-2"></div>
+
+    <p class="body-lg reveal reveal-delay-2">
+      To make one short-form ad: Midjourney → Runway → ElevenLabs → Suno → Firefly.
+      Five logins. Five uploads. Five interfaces. Zero shared context.
+    </p>
+
+    <div class="stat-grid mt-m reveal reveal-delay-3">
+      <div class="stat-card">
+        <span class="num grad-text" data-count="90000" data-suffix="K+">0</span>
+        <span class="label">AI platforms exist globally</span>
+        <span class="source">Ardion.io, 2026</span>
+      </div>
+      <div class="stat-card">
+        <span class="num" data-count="432" data-suffix="+">0</span>
+        <span class="label">Image generation tools alone</span>
+        <span class="source">Flowlyn.com, 2026</span>
+      </div>
+      <div class="stat-card">
+        <span class="num" data-count="86" data-suffix="%">0</span>
+        <span class="label">Creators use GenAI in their work</span>
+        <span class="source">Adobe, Oct 2025 — 16K creators</span>
+      </div>
+      <div class="stat-card">
+        <span class="num" data-count="60" data-suffix="%">0</span>
+        <span class="label">Use 3+ AI tools every 3 months</span>
+        <span class="source">Adobe, 2025</span>
+      </div>
+    </div>
+
+    <div class="closer reveal reveal-delay-4">
+      "The creator's current workflow is not a product. It's a patchwork."
+    </div>
+
+    <div class="slide-num">02 / 14</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
      SLIDE 2 — THE PROBLEM: HIDDEN COSTS
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="problem-2" data-slide="2">
-  <div class="blob b" style="width:350px;height:350px;background:var(--orange);bottom:-80px;left:-80px;opacity:0.08;"></div>
+  <section class="slide" id="problem-2" data-slide="2">
+    <div class="blob b" style="width:350px;height:350px;background:var(--orange);bottom:-80px;left:-80px;opacity:0.08;">
+    </div>
 
-  <div class="tag orange reveal">01 — The Cost of Fragmentation</div>
-  <h2 class="reveal reveal-delay-1">Every Switch<br/><span class="grad-text">Has a Price Tag.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
+    <div class="tag orange reveal">02 — The Cost of Fragmentation</div>
+    <h2 class="reveal reveal-delay-1">Every Switch<br /><span class="grad-text">Has a Price Tag.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <div class="two-col mt-m">
-    <!-- Time cost -->
-    <div class="card reveal reveal-delay-2">
-      <div class="section-header">
-        <div class="dot"></div>
-        <span>Time Cost</span>
+    <div class="two-col mt-m">
+      <!-- Time cost -->
+      <div class="card reveal reveal-delay-2">
+        <div class="section-header">
+          <div class="dot"></div>
+          <span>Time Cost</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Stat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Focus recovery per switch</td>
+              <td class="accent">23 min</td>
+            </tr>
+            <tr>
+              <td>Weekly time lost to reorientation</td>
+              <td class="accent">~4 hrs</td>
+            </tr>
+            <tr>
+              <td>Annual work time lost to app-switching</td>
+              <td class="accent">9%</td>
+            </tr>
+            <tr>
+              <td>Productivity lost to context-switching</td>
+              <td class="accent">up to 40%</td>
+            </tr>
+            <tr>
+              <td>Workers who feel tools make them less productive</td>
+              <td class="accent">45%</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="body-sm mt-s">A 6-tool project → <strong>~1.9 hours lost</strong> to switching alone.</p>
       </div>
-      <table class="data-table">
-        <thead>
-          <tr><th>Metric</th><th>Stat</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Focus recovery per switch</td><td class="accent">23 min</td></tr>
-          <tr><td>Weekly time lost to reorientation</td><td class="accent">~4 hrs</td></tr>
-          <tr><td>Annual work time lost to app-switching</td><td class="accent">9%</td></tr>
-          <tr><td>Productivity lost to context-switching</td><td class="accent">up to 40%</td></tr>
-          <tr><td>Workers who feel tools make them less productive</td><td class="accent">45%</td></tr>
-        </tbody>
-      </table>
-      <p class="body-sm mt-s">A 6-tool project → <strong>~1.9 hours lost</strong> to switching alone.</p>
-    </div>
 
-    <!-- Money cost -->
-    <div class="card reveal reveal-delay-3">
-      <div class="section-header">
-        <div class="dot"></div>
-        <span>Money Cost</span>
+      <!-- Money cost -->
+      <div class="card reveal reveal-delay-3">
+        <div class="section-header">
+          <div class="dot"></div>
+          <span>Money Cost</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>/mo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Midjourney Pro</td>
+              <td class="muted">$60</td>
+            </tr>
+            <tr>
+              <td>Runway Pro</td>
+              <td class="muted">$35</td>
+            </tr>
+            <tr>
+              <td>Adobe Firefly Pro</td>
+              <td class="muted">$30</td>
+            </tr>
+            <tr>
+              <td>ElevenLabs Creator</td>
+              <td class="muted">$22</td>
+            </tr>
+            <tr>
+              <td>Suno Pro</td>
+              <td class="muted">$10</td>
+            </tr>
+            <tr class="total">
+              <td>5 tools subtotal</td>
+              <td class="accent">$157</td>
+            </tr>
+            <tr>
+              <td>+ ChatGPT Pro (for Sora)</td>
+              <td class="muted">+$200</td>
+            </tr>
+            <tr class="total">
+              <td>Real monthly stack</td>
+              <td class="accent">$357</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="body-sm mt-s">That's <strong>$4,284/year</strong> — before team seats.</p>
       </div>
-      <table class="data-table">
-        <thead>
-          <tr><th>Tool</th><th>/mo</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Midjourney Pro</td><td class="muted">$60</td></tr>
-          <tr><td>Runway Pro</td><td class="muted">$35</td></tr>
-          <tr><td>Adobe Firefly Pro</td><td class="muted">$30</td></tr>
-          <tr><td>ElevenLabs Creator</td><td class="muted">$22</td></tr>
-          <tr><td>Suno Pro</td><td class="muted">$10</td></tr>
-          <tr class="total"><td>5 tools subtotal</td><td class="accent">$157</td></tr>
-          <tr><td>+ ChatGPT Pro (for Sora)</td><td class="muted">+$200</td></tr>
-          <tr class="total"><td>Real monthly stack</td><td class="accent">$357</td></tr>
-        </tbody>
-      </table>
-      <p class="body-sm mt-s">That's <strong>$4,284/year</strong> — before team seats.</p>
     </div>
-  </div>
 
-  <div class="stat-grid mt-m reveal reveal-delay-4" style="grid-template-columns: repeat(3, 1fr);">
-    <div class="stat-card">
-      <span class="num">56%</span>
-      <span class="label">say they can't afford all the AI tools they want</span>
+    <div class="stat-grid mt-m reveal reveal-delay-4" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="stat-card">
+        <span class="num">56%</span>
+        <span class="label">say they can't afford all the AI tools they want</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">54%</span>
+        <span class="label">believe AI pricing is becoming "a rip-off"</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">61%</span>
+        <span class="label">cut other subscriptions to keep paying for AI tools</span>
+      </div>
     </div>
-    <div class="stat-card">
-      <span class="num">54%</span>
-      <span class="label">believe AI pricing is becoming "a rip-off"</span>
-    </div>
-    <div class="stat-card">
-      <span class="num">61%</span>
-      <span class="label">cut other subscriptions to keep paying for AI tools</span>
-    </div>
-  </div>
 
-  <p class="source mt-s reveal reveal-delay-5">Bango consumer survey, Oct 2025 — 2,000 Americans</p>
+    <p class="source mt-s reveal reveal-delay-5">Bango consumer survey, Oct 2025 — 2,000 Americans</p>
 
-  <div class="slide-num">03 / 18</div>
-</section>
+    <div class="slide-num">03 / 14</div>
+  </section>
 
-<!-- ═══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
      SLIDE 3 — THE OPPORTUNITY: MARKET SIZE
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="opportunity-1" data-slide="3">
-  <div class="blob a" style="width:500px;height:500px;background:var(--green);top:-150px;right:-150px;opacity:0.07;"></div>
-
-  <div class="tag green reveal">02 — The Opportunity</div>
-  <h2 class="reveal reveal-delay-1">A <span class="grad-text">$132B Market</span><br/>With No Clear Winner.</h2>
-  <div class="divider reveal reveal-delay-2"></div>
-
-  <div class="card reveal reveal-delay-2">
-    <table class="data-table">
-      <thead>
-        <tr><th>Segment</th><th>2024</th><th>Projected</th><th>CAGR</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Audio/Visual GenAI (combined)</td><td class="muted">$15.86B</td><td class="accent">$132.59B</td><td class="muted">52.9% by 2030</td></tr>
-        <tr><td>AI Image Generation</td><td class="muted">$8.7B</td><td class="accent">$60.8B</td><td class="muted">38.2% by 2030</td></tr>
-        <tr><td>AI Video Generation</td><td class="muted">$3.86B</td><td class="accent">$42.29B</td><td class="muted">32.2% by 2033</td></tr>
-        <tr><td>AI Music / Audio</td><td class="muted">$5.2B</td><td class="accent">$60.44B</td><td class="muted">— by 2034</td></tr>
-        <tr><td>AI 3D Asset Generation</td><td class="muted">$1.63B</td><td class="accent">$9.24B</td><td class="muted">24.3% by 2032</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="stat-grid mt-m reveal reveal-delay-3" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
-    <div class="stat-card">
-      <span class="num">$210B</span>
-      <span class="label">Content spend by top 12 media cos in 2024</span>
-      <span class="source">Variety / KPMG, 2025</span>
+  <section class="slide" id="opportunity-1" data-slide="3">
+    <div class="blob a" style="width:500px;height:500px;background:var(--green);top:-150px;right:-150px;opacity:0.07;">
     </div>
-    <div class="stat-card">
-      <span class="num">$37B</span>
-      <span class="label">Enterprise GenAI spend in 2025 (+222% YoY)</span>
-      <span class="source">Menlo Ventures, 2025</span>
-    </div>
-    <div class="stat-card">
-      <span class="num">207M</span>
-      <span class="label">Active content creators worldwide</span>
-      <span class="source">Creator economy data, 2025</span>
-    </div>
-  </div>
 
-  <div class="closer reveal reveal-delay-4">
-    "$132 billion market. Enterprise spend tripling. 68% of CIOs consolidating vendors. And no one has built the unified creative platform. Until now."
-  </div>
+    <div class="tag green reveal">03 — The Opportunity</div>
+    <h2 class="reveal reveal-delay-1">A <span class="grad-text">$132B Market</span><br />With No Clear Winner.</h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <div class="slide-num">04 / 18</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 4 — THE OPPORTUNITY: CONSOLIDATION WAVE
-═══════════════════════════════════════════════ -->
-<section class="slide" id="opportunity-2" data-slide="4">
-  <div class="blob b" style="width:400px;height:400px;background:var(--blue);bottom:-100px;left:-50px;opacity:0.09;"></div>
-
-  <div class="tag blue reveal">02 — The Consolidation Wave</div>
-  <h2 class="reveal reveal-delay-1">Enterprises Are<br/><span class="grad-text">Done Experimenting.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
-
-  <div class="two-col mt-s">
     <div class="card reveal reveal-delay-2">
-      <div class="section-header"><div class="dot"></div><span>Enterprise Signal</span></div>
-      <div class="stat-card" style="background:transparent;border:none;padding:0;margin-bottom:12px;">
-        <span class="num">68%</span>
-        <span class="label">of CIOs actively planning AI vendor consolidation</span>
-        <span class="source">SAP / NPI Research, 2025</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Segment</th>
+            <th>2024</th>
+            <th>Projected</th>
+            <th>CAGR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Audio/Visual GenAI (combined)</td>
+            <td class="muted">$15.86B</td>
+            <td class="accent">$132.59B</td>
+            <td class="muted">52.9% by 2030</td>
+          </tr>
+          <tr>
+            <td>AI Image Generation</td>
+            <td class="muted">$8.7B</td>
+            <td class="accent">$60.8B</td>
+            <td class="muted">38.2% by 2030</td>
+          </tr>
+          <tr>
+            <td>AI Video Generation</td>
+            <td class="muted">$3.86B</td>
+            <td class="accent">$42.29B</td>
+            <td class="muted">32.2% by 2033</td>
+          </tr>
+          <tr>
+            <td>AI Music / Audio</td>
+            <td class="muted">$5.2B</td>
+            <td class="accent">$60.44B</td>
+            <td class="muted">— by 2034</td>
+          </tr>
+          <tr>
+            <td>AI 3D Asset Generation</td>
+            <td class="muted">$1.63B</td>
+            <td class="accent">$9.24B</td>
+            <td class="muted">24.3% by 2032</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="stat-grid mt-m reveal reveal-delay-3"
+      style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+      <div class="stat-card">
+        <span class="num">$210B</span>
+        <span class="label">Content spend by top 12 media cos in 2024</span>
+        <span class="source">Variety / KPMG, 2025</span>
       </div>
-      <div class="stat-card" style="background:transparent;border:none;padding:0;">
-        <span class="num">76%</span>
-        <span class="label">of AI use cases now purchased, not built internally</span>
+      <div class="stat-card">
+        <span class="num">$37B</span>
+        <span class="label">Enterprise GenAI spend in 2025 (+222% YoY)</span>
         <span class="source">Menlo Ventures, 2025</span>
       </div>
+      <div class="stat-card">
+        <span class="num">207M</span>
+        <span class="label">Active content creators worldwide</span>
+        <span class="source">Creator economy data, 2025</span>
+      </div>
     </div>
 
-    <div class="reveal reveal-delay-3">
-      <div class="card" style="margin-bottom:12px;">
-        <div class="section-header"><div class="dot"></div><span>M&A Signal</span></div>
+    <div class="closer reveal reveal-delay-4">
+      "$132 billion market. Enterprise spend tripling. 68% of CIOs consolidating vendors. And no one has built the
+      unified creative platform. Until now."
+    </div>
+
+    <div class="slide-num">04 / 14</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+     SLIDE 4 — THE OPPORTUNITY: CONSOLIDATION WAVE
+═══════════════════════════════════════════════ -->
+  <section class="slide" id="opportunity-2" data-slide="4">
+    <div class="blob b" style="width:400px;height:400px;background:var(--blue);bottom:-100px;left:-50px;opacity:0.09;">
+    </div>
+
+    <div class="tag blue reveal">04 — The Consolidation Wave</div>
+    <h2 class="reveal reveal-delay-1">Enterprises Are<br /><span class="grad-text">Done Experimenting.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
+
+    <div class="two-col mt-s">
+      <div class="card reveal reveal-delay-2">
+        <div class="section-header">
+          <div class="dot"></div><span>Enterprise Signal</span>
+        </div>
+        <div class="stat-card" style="background:transparent;border:none;padding:0;margin-bottom:12px;">
+          <span class="num">68%</span>
+          <span class="label">of CIOs actively planning AI vendor consolidation</span>
+          <span class="source">SAP / NPI Research, 2025</span>
+        </div>
         <div class="stat-card" style="background:transparent;border:none;padding:0;">
-          <span class="num">427</span>
-          <span class="label">AI acquisitions in H1 2025 (+18% YoY)</span>
-          <span class="source">LowTouch.ai</span>
+          <span class="num">76%</span>
+          <span class="label">of AI use cases now purchased, not built internally</span>
+          <span class="source">Menlo Ventures, 2025</span>
         </div>
       </div>
-      <div class="quote" style="margin:0;">
-        <p>"Enterprises will spend more on AI in 2026 — through fewer vendors."</p>
-        <span class="attribution">— VC consensus, TechCrunch, Dec 2025</span>
-      </div>
-    </div>
-  </div>
 
-  <div class="card mt-m reveal reveal-delay-4">
-    <div class="section-header"><div class="dot"></div><span>The Market Validated Our Thesis in Real Time</span></div>
-    <div class="comp-row">
-      <div class="comp-icon">🚀</div>
-      <div class="comp-body">
-        <div class="comp-name">Luma AI — March 5, 2026</div>
-        <div class="comp-detail">Launched "Luma Agents" with exact same framing: end the multi-tool mess. Raised $1.1B, valued at $4B.</div>
-      </div>
-      <div class="comp-val">$4B</div>
-    </div>
-    <div class="comp-row">
-      <div class="comp-icon">📰</div>
-      <div class="comp-body">
-        <div class="comp-name">AdWeek headline, March 2026</div>
-        <div class="comp-detail">"Luma AI Agents Promise to End the Multi-Tool Mess"</div>
-      </div>
-    </div>
-    <div class="comp-row" style="border:none;">
-      <div class="comp-icon">⚡</div>
-      <div class="comp-body">
-        <div class="comp-name">OpenAI shut down standalone Sora, March 24, 2026</div>
-        <div class="comp-detail">Folded into ChatGPT. Signal: point solutions can't hold users. Integrated platforms win.</div>
+      <div class="reveal reveal-delay-3">
+        <div class="card" style="margin-bottom:12px;">
+          <div class="section-header">
+            <div class="dot"></div><span>M&A Signal</span>
+          </div>
+          <div class="stat-card" style="background:transparent;border:none;padding:0;">
+            <span class="num">427</span>
+            <span class="label">AI acquisitions in H1 2025 (+18% YoY)</span>
+            <span class="source">LowTouch.ai</span>
+          </div>
+        </div>
+        <div class="quote" style="margin:0;">
+          <p>"Enterprises will spend more on AI in 2026 — through fewer vendors."</p>
+          <span class="attribution">— VC consensus, TechCrunch, Dec 2025</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="slide-num">05 / 18</div>
-</section>
+    <div class="card mt-m reveal reveal-delay-4">
+      <div class="section-header">
+        <div class="dot"></div><span>The Market Validated Our Thesis in Real Time</span>
+      </div>
+      <div class="comp-row">
+        <div class="comp-icon">🚀</div>
+        <div class="comp-body">
+          <div class="comp-name">Luma AI — March 5, 2026</div>
+          <div class="comp-detail">Launched "Luma Agents" with exact same framing: end the multi-tool mess. Raised
+            $1.1B, valued at $4B.</div>
+        </div>
+        <div class="comp-val">$4B</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-icon">📰</div>
+        <div class="comp-body">
+          <div class="comp-name">AdWeek headline, March 2026</div>
+          <div class="comp-detail">"Luma AI Agents Promise to End the Multi-Tool Mess"</div>
+        </div>
+      </div>
+      <div class="comp-row" style="border:none;">
+        <div class="comp-icon">⚡</div>
+        <div class="comp-body">
+          <div class="comp-name">OpenAI shut down standalone Sora, March 24, 2026</div>
+          <div class="comp-detail">Folded into ChatGPT. Signal: point solutions can't hold users. Integrated platforms
+            win.</div>
+        </div>
+      </div>
+    </div>
 
-<!-- ═══════════════════════════════════════════════
+    <div class="slide-num">05 / 14</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
      SLIDE 5 — COMPARABLES: WHO OWNS THE WORKFLOW WINS
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="comparables" data-slide="5">
-  <div class="blob a" style="width:450px;height:450px;background:var(--purple);top:-100px;right:-100px;opacity:0.1;"></div>
-
-  <div class="tag purple reveal">02 — The Pattern That Always Wins</div>
-  <h2 class="reveal reveal-delay-1">Whoever Owns<br/>the <span class="grad-text">Workflow, Wins.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
-
-  <div class="card reveal reveal-delay-2">
-    <table class="data-table">
-      <thead>
-        <tr><th>Platform</th><th>What They Unified</th><th>Outcome</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Figma</strong></td>
-          <td class="muted">Sketch, InVision, Adobe XD</td>
-          <td class="accent">Adobe bid $20B (50× ARR) · $1.05B rev 2025</td>
-        </tr>
-        <tr>
-          <td><strong>Slack</strong></td>
-          <td class="muted">Email, IRC, intranets</td>
-          <td class="accent">Salesforce acq. $27.7B</td>
-        </tr>
-        <tr>
-          <td><strong>Notion</strong></td>
-          <td class="muted">Notes, wikis, tasks, databases</td>
-          <td class="accent">$11B valuation</td>
-        </tr>
-        <tr>
-          <td><strong>Adobe CC</strong></td>
-          <td class="muted">Photo, video, design, PDF</td>
-          <td class="accent">$22B annual rev · 30M subscribers</td>
-        </tr>
-        <tr>
-          <td><strong>Artlist</strong></td>
-          <td class="muted">Stock → AI creative ecosystem</td>
-          <td class="accent">$260M ARR · 50M creators · +50% YoY</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="grad-card mt-m reveal reveal-delay-3">
-    <div class="grad-card-inner">
-      <p class="eyebrow">The Figma Parallel</p>
-      <p class="body-sm" style="color:var(--text);">
-        Figma 2017: <em>"Design is fragmented across too many tools that don't share context."</em><br/>
-        By 2022: 90%+ market share. Adobe tried to buy at <strong>50× ARR</strong> — highest SaaS acquisition multiple ever.
-      </p>
-      <div style="height:12px;"></div>
-      <p class="body-sm" style="color:var(--navy); font-weight:600;">
-        LFX Studio 2026: "AI media generation is fragmented across too many tools that don't share context. Put it all on one spatial canvas with a single intelligent agent."
-      </p>
+  <section class="slide" id="comparables" data-slide="5">
+    <div class="blob a" style="width:450px;height:450px;background:var(--purple);top:-100px;right:-100px;opacity:0.1;">
     </div>
-  </div>
 
-  <div class="slide-num">06 / 18</div>
-</section>
+    <div class="tag purple reveal">05 — The Pattern That Always Wins</div>
+    <h2 class="reveal reveal-delay-1">Whoever Owns<br />the <span class="grad-text">Workflow, Wins.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-<!-- ═══════════════════════════════════════════════
+    <div class="card reveal reveal-delay-2">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>What They Unified</th>
+            <th>Outcome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Figma</strong></td>
+            <td class="muted">Sketch, InVision, Adobe XD</td>
+            <td class="accent">Adobe bid $20B (50× ARR) · $1.05B rev 2025</td>
+          </tr>
+          <tr>
+            <td><strong>Slack</strong></td>
+            <td class="muted">Email, IRC, intranets</td>
+            <td class="accent">Salesforce acq. $27.7B</td>
+          </tr>
+          <tr>
+            <td><strong>Notion</strong></td>
+            <td class="muted">Notes, wikis, tasks, databases</td>
+            <td class="accent">$11B valuation</td>
+          </tr>
+          <tr>
+            <td><strong>Adobe CC</strong></td>
+            <td class="muted">Photo, video, design, PDF</td>
+            <td class="accent">$22B annual rev · 30M subscribers</td>
+          </tr>
+          <tr>
+            <td><strong>Artlist</strong></td>
+            <td class="muted">Stock → AI creative ecosystem</td>
+            <td class="accent">$260M ARR · 50M creators · +50% YoY</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grad-card mt-m reveal reveal-delay-3">
+      <div class="grad-card-inner">
+        <p class="eyebrow">The Figma Parallel</p>
+        <p class="body-sm" style="color:var(--text);">
+          Figma 2017: <em>"Design is fragmented across too many tools that don't share context."</em><br />
+          By 2022: 90%+ market share. Adobe tried to buy at <strong>50× ARR</strong> — highest SaaS acquisition multiple
+          ever.
+        </p>
+        <div style="height:12px;"></div>
+        <p class="body-sm" style="color:var(--navy); font-weight:600;">
+          LFX Studio 2026: "AI media generation is fragmented across too many tools that don't share context. Put it all
+          on one spatial canvas with intelligent agents."
+        </p>
+      </div>
+    </div>
+
+    <div class="slide-num">06 / 14</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
      SLIDE 6 — COMPETITIVE GAPS
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="competition" data-slide="6">
-  <div class="blob b" style="width:400px;height:400px;background:var(--purple);bottom:-80px;right:-80px;opacity:0.1;"></div>
-
-  <div class="tag purple reveal">02 — Competitive Landscape</div>
-  <h2 class="reveal reveal-delay-1"><span class="grad-text">Everyone's Partial.</span><br/>We're Complete.</h2>
-  <div class="divider reveal reveal-delay-2"></div>
-
-  <div class="card reveal reveal-delay-2">
-    <table class="data-table">
-      <thead>
-        <tr><th>Competitor</th><th>Valuation/ARR</th><th>Gap</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Runway ML</strong></td>
-          <td class="accent">$5.3B · $90M ARR</td>
-          <td class="muted">Video only. No audio, image, 3D, agent, or canvas.</td>
-        </tr>
-        <tr>
-          <td><strong>Luma AI</strong></td>
-          <td class="accent">$4B · $1.1B raised</td>
-          <td class="muted">Just launched Mar 2026. No spatial canvas, no agent-first chat.</td>
-        </tr>
-        <tr>
-          <td><strong>Adobe Firefly</strong></td>
-          <td class="accent">$22B total (Adobe)</td>
-          <td class="muted">Legacy UX. AI bolted onto old tools. Not agent-first.</td>
-        </tr>
-        <tr>
-          <td><strong>Canva AI</strong></td>
-          <td class="accent">150M users</td>
-          <td class="muted">Consumer/SMB. No professional generation pipeline.</td>
-        </tr>
-        <tr>
-          <td><strong>Kling AI</strong></td>
-          <td class="accent">$240M ARR</td>
-          <td class="muted">Video only. Chinese co. (geopolitical risk). No platform.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="mt-m reveal reveal-delay-3">
-    <p class="eyebrow" style="margin-bottom:10px;">What LFX Studio uniquely has</p>
-    <div class="pill-list">
-      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Agent-first chat (not menu-driven)</span>
-      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Spatial non-linear canvas</span>
-      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ 50+ models: video + image + audio + 3D</span>
-      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Persistent creative context</span>
-      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Enterprise: credits, auth, brand kits, consent</span>
-      <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Native integrations (not partnerships)</span>
+  <section class="slide" id="competition" data-slide="6">
+    <div class="blob b" style="width:400px;height:400px;background:var(--purple);bottom:-80px;right:-80px;opacity:0.1;">
     </div>
-  </div>
 
-  <div class="closer reveal reveal-delay-4">
-    "207 million creators. 900+ AI media tools. Zero unified workspace. That's the gap we're filling."
-  </div>
+    <div class="tag purple reveal">06 — Competitive Landscape</div>
+    <h2 class="reveal reveal-delay-1"><span class="grad-text">Everyone's Partial.</span><br />We're Complete.</h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <div class="slide-num">07 / 18</div>
-</section>
+    <div class="card reveal reveal-delay-2">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Competitor</th>
+            <th>Valuation/ARR</th>
+            <th>Gap</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Runway ML</strong></td>
+            <td class="accent">$5.3B · $90M ARR</td>
+            <td class="muted">Video only. No audio, image, 3D, agent, or canvas.</td>
+          </tr>
+          <tr>
+            <td><strong>Luma AI</strong></td>
+            <td class="accent">$4B · $1.1B raised</td>
+            <td class="muted">Just launched Mar 2026. No spatial canvas, no agent-first chat.</td>
+          </tr>
+          <tr>
+            <td><strong>Adobe Firefly</strong></td>
+            <td class="accent">$160B+ (Adobe) · $400M Firefly revenue</td>
+            <td class="muted">Legacy UX. AI bolted onto old tools. Not agent-first.</td>
+          </tr>
+          <tr>
+            <td><strong>Canva AI</strong></td>
+            <td class="accent">$42B · $4B ARR</td>
+            <td class="muted">Consumer/SMB. No professional generation pipeline.</td>
+          </tr>
+          <tr>
+            <td><strong>Kling AI</strong></td>
+            <td class="accent">$300M ARR</td>
+            <td class="muted">Video only. Chinese co. (geopolitical risk). No platform.</td>
+          </tr>
+          <tr>
+            <td><strong>Lovart</strong></td>
+            <td class="accent">Undisclosed</td>
+            <td class="muted">Single-agent + canvas. Branding/design only. No audio, speech, music, or cross-media
+              editing.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-m reveal reveal-delay-3">
+      <p class="eyebrow" style="margin-bottom:10px;">What LFX Studio uniquely has</p>
+      <div class="pill-list">
+        <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Agent-first chat (not menu-driven)</span>
+        <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Spatial non-linear canvas</span>
+        <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ 50+ models: video + image + audio +
+          3D</span>
+        <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Persistent creative context</span>
+        <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Enterprise: credits, auth, brand kits,
+          consent</span>
+        <span class="pill" style="border-color:#b8c6e0;color:var(--navy);">✓ Native integrations (not
+          partnerships)</span>
+      </div>
+    </div>
+
+    <div class="closer reveal reveal-delay-4">
+      "207 million creators. 900+ AI media tools. Zero unified workspace. That's the gap we're filling."
+    </div>
+
+    <div class="slide-num">07 / 14</div>
+  </section>
 
 
-<!-- ═══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
      SLIDE 7 — THE SOLUTION: OVERVIEW
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="solution-1" data-slide="7">
-  <div class="tag purple reveal">03 — The Solution</div>
-  <h2 class="reveal reveal-delay-1">One Canvas. One Agent.<br/><span class="grad-text">Every AI Model.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
+  <section class="slide" id="solution-1" data-slide="7">
+    <div class="tag purple reveal">07 — The Solution</div>
+    <h2 class="reveal reveal-delay-1">One Canvas. Multiple Agents.<br /><span class="grad-text">Every Model. Every
+        Tool.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <p class="body-lg reveal reveal-delay-2">
-    Every other tool asks: <em>"Which AI do you want to use?"</em><br/>
-    LFX Studio asks: <em>"What do you want to create?"</em><br/>
-    The agent picks the model, executes it, and places the result on your canvas — maintaining full context across every step.
-  </p>
+    <p class="body-lg reveal reveal-delay-2">
+      Every other tool asks: <em>"Which model do you want to use?"</em><br />
+      LFX Studio asks: <em>"What do you want to create?"</em><br />
+      The agent picks the model, tool, executes it, and places the result on your canvas — maintaining full context
+      across every step.
+    </p>
 
-  <div class="stat-grid mt-m reveal reveal-delay-3" style="grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));">
-    <div class="stat-card">
-      <span class="num">50+</span>
-      <span class="label">AI models integrated</span>
-    </div>
-    <div class="stat-card">
-      <span class="num">26</span>
-      <span class="label">Video generation models</span>
-    </div>
-    <div class="stat-card">
-      <span class="num">10</span>
-      <span class="label">Image models</span>
-    </div>
-    <div class="stat-card">
-      <span class="num">10</span>
-      <span class="label">Audio models</span>
-    </div>
-    <div class="stat-card">
-      <span class="num">6</span>
-      <span class="label">3D models</span>
-    </div>
-    <div class="stat-card">
-      <span class="num">9</span>
-      <span class="label">Canvas element types</span>
-    </div>
-  </div>
-
-  <div class="card mt-m reveal reveal-delay-4">
-    <div class="section-header"><div class="dot"></div><span>What the agent knows at every step</span></div>
-    <div class="two-col" style="gap:8px;">
-      <div>
-        <p class="body-sm">· Every element on the canvas (type, URL, prompt, dimensions)</p>
-        <p class="body-sm">· Full conversation history for the session</p>
-        <p class="body-sm">· Active brand kit (colors, fonts, tone, references)</p>
-        <p class="body-sm">· Currently selected elements — auto-filled as inputs</p>
+    <div class="stat-grid mt-m reveal reveal-delay-3"
+      style="grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));">
+      <div class="stat-card">
+        <span class="num">50+</span>
+        <span class="label">AI models integrated</span>
       </div>
-      <div>
-        <p class="body-sm">· Credit balance — won't call tools the user can't afford</p>
-        <p class="body-sm">· Mind map trees and brainstorming context</p>
-        <p class="body-sm">· Session summary (rolling compression of older context)</p>
-        <p class="body-sm">· BM25 semantic search across all 50+ deferred tools</p>
+      <div class="stat-card">
+        <span class="num">26</span>
+        <span class="label">Video generation models</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">10</span>
+        <span class="label">Image models</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">10</span>
+        <span class="label">Audio models</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">3</span>
+        <span class="label">3D models</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">9</span>
+        <span class="label">Canvas element types</span>
       </div>
     </div>
-  </div>
 
-  <div class="slide-num">08 / 18</div>
-</section>
+    <div class="card mt-m reveal reveal-delay-4">
+      <div class="section-header">
+        <div class="dot"></div><span>What the agent knows at every step</span>
+      </div>
+      <div class="two-col" style="gap:8px;">
+        <div>
+          <p class="body-sm">· Every element on the canvas (type, URL, prompt, dimensions)</p>
+          <p class="body-sm">· Full conversation history for the session</p>
+          <p class="body-sm">· Active brand kit (colors, fonts, tone, references)</p>
+          <p class="body-sm">· Currently selected elements — auto-filled as inputs</p>
+        </div>
+        <div>
+          <p class="body-sm">· Credit balance — won't call tools the user can't afford</p>
+          <p class="body-sm">· Executable Mind map trees and brainstorming context</p>
+          <p class="body-sm">· Session summary (rolling compression of older context)</p>
+          <p class="body-sm">· BM25 semantic search across all 50+ deferred tools</p>
+        </div>
+      </div>
+    </div>
 
-<!-- ═══════════════════════════════════════════════
+    <div class="slide-num">08 / 14</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
      SLIDE 8 — THE SOLUTION: THREE DIFFERENTIATORS
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="solution-2" data-slide="8">
-  <div class="tag purple reveal">03 — The Solution</div>
-  <h2 class="reveal reveal-delay-1">Three Things<br/><span class="grad-text">Nobody Else Has Combined.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
+  <section class="slide" id="solution-2" data-slide="8">
+    <div class="tag purple reveal">08 — The Solution</div>
+    <h2 class="reveal reveal-delay-1">Three Things<br /><span class="grad-text">Nobody Else Has Combined.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <div class="card mt-m reveal reveal-delay-2">
-    <div style="padding-bottom:16px;border-bottom:1px solid var(--border-l);margin-bottom:16px;">
-      <p class="eyebrow" style="margin-bottom:6px;">1 — Agent-First, Not Tool-First</p>
-      <p class="body-sm" style="color:var(--text);">Claude with extended thinking — reasons before acting, plans multi-step workflows, not just single-turn prompts. Uses BM25 semantic search to find the right model across 50+ tools without loading them all into context.</p>
-      <p class="body-sm mt-s"><strong>60–80% lower cost</strong> per request via Anthropic prompt caching (5-min TTL). Up to 20K thinking tokens per request.</p>
+    <div class="card mt-m reveal reveal-delay-2">
+      <div style="padding-bottom:16px;border-bottom:1px solid var(--border-l);margin-bottom:16px;">
+        <p class="eyebrow" style="margin-bottom:6px;">1 — Agent-First, Not Tool-First</p>
+        <p class="body-sm" style="color:var(--text);">Claude with extended thinking — reasons before acting, plans
+          multi-step workflows, not just single-turn prompts. Uses BM25 semantic search to find the right model across
+          50+ tools without loading them all into context.</p>
+        <p class="body-sm mt-s"><strong>60–80% lower cost</strong> per request via Anthropic prompt caching (5-min TTL).
+          Up to 20K thinking tokens per request.</p>
+      </div>
+      <div style="padding-bottom:16px;border-bottom:1px solid var(--border-l);margin-bottom:16px;">
+        <p class="eyebrow" style="margin-bottom:6px;">2 — Spatial Canvas</p>
+        <p class="body-sm" style="color:var(--text);">Custom-built infinite canvas — not off-the-shelf. 9 element types.
+          Assets appear <em>as they generate</em>, mid-stream. Mind maps, freehand drawing, groups, z-ordering. The
+          canvas is the creative memory.</p>
+        <p class="body-sm mt-s">Closest analogy: Figma's canvas — but for AI generation across every media type.</p>
+      </div>
+      <div>
+        <p class="eyebrow" style="margin-bottom:6px;">3 — Model-Agnostic (50+ Models)</p>
+        <p class="body-sm" style="color:var(--text);">Not locked to any single provider. Veo 3.1, Sora 2, Kling 3.0,
+          ElevenLabs, Meshy, and 45+ more. Adding a new model requires ~20 lines of config. If a better model launches
+          tomorrow, it's integrated within minutes.</p>
+      </div>
     </div>
-    <div style="padding-bottom:16px;border-bottom:1px solid var(--border-l);margin-bottom:16px;">
-      <p class="eyebrow" style="margin-bottom:6px;">2 — Spatial Canvas</p>
-      <p class="body-sm" style="color:var(--text);">Custom-built infinite canvas — not off-the-shelf. 9 element types. Assets appear <em>as they generate</em>, mid-stream. Mind maps, freehand drawing, groups, z-ordering. The canvas is the creative memory.</p>
-      <p class="body-sm mt-s">Closest analogy: Figma's canvas — but for AI generation across every media type.</p>
+
+    <div class="card mt-m reveal reveal-delay-3">
+      <div class="section-header">
+        <div class="dot"></div><span>Architecture that's hard to replicate</span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Technology</th>
+            <th>Why It Matters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Agent</td>
+            <td class="muted">Anthropic Claude, extended thinking</td>
+            <td class="muted">Reasons before acting — not autocomplete</td>
+          </tr>
+          <tr>
+            <td>Tool discovery</td>
+            <td class="muted">BM25 semantic search (deferred tools)</td>
+            <td class="muted">50+ models at scale, low token cost</td>
+          </tr>
+          <tr>
+            <td>Streaming</td>
+            <td class="muted">SSE (Server-Sent Events) and Web-Socket</td>
+            <td class="muted">Real-time canvas updates, no polling</td>
+          </tr>
+          <tr>
+            <td>Canvas</td>
+            <td class="muted">Custom-built spatial canvas</td>
+            <td class="muted">Full spatial control, R-tree hit testing</td>
+          </tr>
+          <tr>
+            <td>Caching</td>
+            <td class="muted">Anthropic prompt cache, 5-min TTL</td>
+            <td class="muted">60–80% cost reduction per request</td>
+          </tr>
+          <tr>
+            <td>Brand Kits</td>
+            <td class="muted">Persistent brand context per workspace</td>
+            <td class="muted">Agents enforce colors, fonts, tone across every output</td>
+          </tr>
+          <tr>
+            <td>Credit System</td>
+            <td class="muted">Unified credits across all models</td>
+            <td class="muted">One billing layer — no per-provider accounts</td>
+          </tr>
+          <!-- <tr><td>Consent Layer</td><td class="muted">Model-level content provenance</td><td class="muted">Enterprise compliance and rights tracking built-in</td></tr> -->
+        </tbody>
+      </table>
     </div>
-    <div>
-      <p class="eyebrow" style="margin-bottom:6px;">3 — Model-Agnostic (50+ Models)</p>
-      <p class="body-sm" style="color:var(--text);">Not locked to any single provider. Veo 3.1, Sora 2, Kling 3.0, ElevenLabs, Meshy, and 45+ more. Adding a new model requires ~20 lines of config. If a better model launches tomorrow, it's integrated within hours.</p>
-    </div>
-  </div>
 
-  <div class="card mt-m reveal reveal-delay-3">
-    <div class="section-header"><div class="dot"></div><span>Architecture that's hard to replicate</span></div>
-    <table class="data-table">
-      <thead><tr><th>Component</th><th>Technology</th><th>Why It Matters</th></tr></thead>
-      <tbody>
-        <tr><td>Agent</td><td class="muted">Anthropic Claude, extended thinking</td><td class="muted">Reasons before acting — not autocomplete</td></tr>
-        <tr><td>Tool discovery</td><td class="muted">BM25 semantic search (deferred tools)</td><td class="muted">50+ models at scale, low token cost</td></tr>
-        <tr><td>Streaming</td><td class="muted">SSE (Server-Sent Events)</td><td class="muted">Real-time canvas updates, no polling</td></tr>
-        <tr><td>Canvas</td><td class="muted">Custom-built (no React Flow)</td><td class="muted">Full spatial control, R-tree hit testing</td></tr>
-        <tr><td>Caching</td><td class="muted">Anthropic prompt cache, 5-min TTL</td><td class="muted">60–80% cost reduction per request</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="slide-num">09 / 14</div>
+  </section>
 
-  <div class="slide-num">09 / 18</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
      SLIDE 9 — THE SOLUTION: BEFORE vs AFTER
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="solution-3" data-slide="9">
-  <div class="tag purple reveal">03 — The Solution</div>
-  <h2 class="reveal reveal-delay-1">What Changes<br/><span class="grad-text">for the Creator.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
+  <section class="slide" id="solution-3" data-slide="9">
+    <div class="tag purple reveal">09 — The Solution</div>
+    <h2 class="reveal reveal-delay-1">What Changes<br /><span class="grad-text">for the Creator.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <div class="two-col mt-s">
-    <div class="card reveal reveal-delay-2">
-      <div class="section-header"><div class="dot" style="background:#b91c1c;"></div><span>Before — Fragmented Workflow</span></div>
-      <table class="data-table">
-        <thead><tr><th>Step</th><th>Tool</th><th>Friction</th></tr></thead>
-        <tbody>
-          <tr><td>Concept image</td><td class="muted">Midjourney</td><td class="muted">Login, prompt, download</td></tr>
-          <tr><td>Animate</td><td class="muted">Runway / Kling</td><td class="muted">Re-upload, new prompt</td></tr>
-          <tr><td>Voiceover</td><td class="muted">ElevenLabs</td><td class="muted">New tab, script, download</td></tr>
-          <tr><td>Music</td><td class="muted">Suno</td><td class="muted">Another tab, download</td></tr>
-          <tr><td>Edit</td><td class="muted">Premiere / CapCut</td><td class="muted">Import all, manual sync</td></tr>
-          <tr class="total"><td colspan="2"><strong>5 tools</strong></td><td><strong>5 logins · 10+ transfers · $157+/mo</strong></td></tr>
-        </tbody>
-      </table>
+    <div class="two-col mt-s">
+      <div class="card reveal reveal-delay-2">
+        <div class="section-header">
+          <div class="dot" style="background:#b91c1c;"></div><span>Before — Fragmented Workflow</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Step</th>
+              <th>Tool</th>
+              <th>Friction</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Concept image</td>
+              <td class="muted">Midjourney</td>
+              <td class="muted">Login, prompt, download</td>
+            </tr>
+            <tr>
+              <td>Animate</td>
+              <td class="muted">Runway / Kling</td>
+              <td class="muted">Re-upload, new prompt</td>
+            </tr>
+            <tr>
+              <td>Voiceover</td>
+              <td class="muted">ElevenLabs</td>
+              <td class="muted">New tab, script, download</td>
+            </tr>
+            <tr>
+              <td>Music</td>
+              <td class="muted">Suno</td>
+              <td class="muted">Another tab, download</td>
+            </tr>
+            <tr>
+              <td>Edit</td>
+              <td class="muted">Premiere / CapCut</td>
+              <td class="muted">Import all, manual sync</td>
+            </tr>
+            <tr class="total">
+              <td colspan="2"><strong>5 tools</strong></td>
+              <td><strong>5 logins · 10+ transfers · $157+/mo</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card reveal reveal-delay-3">
+        <div class="section-header">
+          <div class="dot" style="background:var(--green);"></div><span>With LFX Studio</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Step</th>
+              <th>What Happens</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Type prompt</td>
+              <td class="muted">Agent reads canvas + brand kit + history</td>
+            </tr>
+            <tr>
+              <td>Model selection</td>
+              <td class="muted">BM25 search across 50+ models</td>
+            </tr>
+            <tr>
+              <td>Image → canvas</td>
+              <td class="muted">Mid-stream spawning</td>
+            </tr>
+            <tr>
+              <td>Video → canvas</td>
+              <td class="muted">Background job, auto-tracked</td>
+            </tr>
+            <tr>
+              <td>Voice + music</td>
+              <td class="muted">Same session, no re-upload</td>
+            </tr>
+            <tr>
+              <td>"More energetic"</td>
+              <td class="muted">Agent updates just that asset</td>
+            </tr>
+            <tr class="total">
+              <td><strong>1 login</strong></td>
+              <td><strong>0 file transfers · 0 context switches</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="card reveal reveal-delay-3">
-      <div class="section-header"><div class="dot" style="background:var(--green);"></div><span>With LFX Studio</span></div>
-      <table class="data-table">
-        <thead><tr><th>Step</th><th>What Happens</th></tr></thead>
-        <tbody>
-          <tr><td>Type prompt</td><td class="muted">Agent reads canvas + brand kit + history</td></tr>
-          <tr><td>Model selection</td><td class="muted">BM25 search across 50+ models</td></tr>
-          <tr><td>Image → canvas</td><td class="muted">Mid-stream spawning</td></tr>
-          <tr><td>Video → canvas</td><td class="muted">Background job, auto-tracked</td></tr>
-          <tr><td>Voice + music</td><td class="muted">Same session, no re-upload</td></tr>
-          <tr><td>"More energetic"</td><td class="muted">Agent updates just that asset</td></tr>
-          <tr class="total"><td><strong>1 login</strong></td><td><strong>0 file transfers · 0 context switches</strong></td></tr>
-        </tbody>
-      </table>
+    <div class="stat-grid mt-m reveal reveal-delay-4" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="stat-card">
+        <span class="num">Hours</span>
+        <span class="label">→ Minutes of iteration</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">$357</span>
+        <span class="label">/mo stack → Just Credits</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">5</span>
+        <span class="label">logins → 1 login</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">0</span>
+        <span class="label">context switches</span>
+      </div>
     </div>
-  </div>
 
-  <div class="stat-grid mt-m reveal reveal-delay-4" style="grid-template-columns: repeat(4, 1fr);">
-    <div class="stat-card">
-      <span class="num">Hours</span>
-      <span class="label">→ Minutes of iteration</span>
+    <div class="closer reveal reveal-delay-5">
+      "Every AI model. One canvas. One conversation."
     </div>
-    <div class="stat-card">
-      <span class="num">$357</span>
-      <span class="label">/mo stack → one subscription</span>
-    </div>
-    <div class="stat-card">
-      <span class="num">5</span>
-      <span class="label">logins → 1 login</span>
-    </div>
-    <div class="stat-card">
-      <span class="num">0</span>
-      <span class="label">context switches</span>
-    </div>
-  </div>
 
-  <div class="closer reveal reveal-delay-5">
-    "Every AI model. One canvas. One conversation. One subscription."
-  </div>
+    <div class="slide-num">10 / 14</div>
+  </section>
 
-  <div class="slide-num">10 / 18</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
      SLIDE 10 — PRODUCT WALKTHROUGH
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="product" data-slide="10">
-  <div class="tag blue reveal">04 — Product Walkthrough</div>
-  <h2 class="reveal reveal-delay-1">The Canvas<br/><span class="grad-text">in Detail.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
+  <section class="slide" id="product" data-slide="10">
+    <div class="tag blue reveal">10 — Product Walkthrough</div>
+    <h2 class="reveal reveal-delay-1">The Canvas<br /><span class="grad-text">in Detail.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <div class="two-col mt-s">
-    <div class="reveal reveal-delay-2">
-      <div class="card">
-        <div class="section-header"><div class="dot"></div><span>9 Canvas Element Types</span></div>
-        <table class="data-table">
-          <thead><tr><th>Type</th><th>Purpose</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Asset</strong></td><td class="muted">Generated / uploaded video, image, audio, 3D</td></tr>
-            <tr><td><strong>Mind Map</strong></td><td class="muted">AI-assisted brainstorming tree with media attachments</td></tr>
-            <tr><td><strong>Group</strong></td><td class="muted">Container that auto-resizes around children</td></tr>
-            <tr><td><strong>Note</strong></td><td class="muted">Rich text sticky note (6 color options)</td></tr>
-            <tr><td><strong>Text</strong></td><td class="muted">Standalone label with font/size/align</td></tr>
-            <tr><td><strong>Drawing</strong></td><td class="muted">Freehand strokes on canvas</td></tr>
-            <tr><td><strong>Highlight</strong></td><td class="muted">Highlighter strokes for annotation</td></tr>
-            <tr><td><strong>Recorder</strong></td><td class="muted">In-canvas audio recorder</td></tr>
-            <tr><td><strong>Camera</strong></td><td class="muted">In-canvas webcam capture</td></tr>
-          </tbody>
-        </table>
+    <div class="two-col mt-s">
+      <div class="reveal reveal-delay-2">
+        <div class="card">
+          <div class="section-header">
+            <div class="dot"></div><span>9 Canvas Element Types</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Asset</strong></td>
+                <td class="muted">Generated / uploaded Video, Image, Audio, 3D</td>
+              </tr>
+              <tr>
+                <td><strong>Mind Map</strong></td>
+                <td class="muted">AI-assisted executable brainstorming tree with media attachments</td>
+              </tr>
+              <tr>
+                <td><strong>Group</strong></td>
+                <td class="muted">Container that auto-resizes around children</td>
+              </tr>
+              <tr>
+                <td><strong>Note</strong></td>
+                <td class="muted">Rich text sticky note (6 color options)</td>
+              </tr>
+              <tr>
+                <td><strong>Text</strong></td>
+                <td class="muted">Standalone label with font/size/align</td>
+              </tr>
+              <tr>
+                <td><strong>Drawing</strong></td>
+                <td class="muted">Freehand strokes on canvas</td>
+              </tr>
+              <tr>
+                <td><strong>Highlight</strong></td>
+                <td class="muted">Highlighter strokes for annotation</td>
+              </tr>
+              <tr>
+                <td><strong>Recorder</strong></td>
+                <td class="muted">In-canvas audio recorder</td>
+              </tr>
+              <tr>
+                <td><strong>Camera</strong></td>
+                <td class="muted">In-canvas webcam capture</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-3">
+        <div class="card" style="margin-bottom:12px;">
+          <div class="section-header">
+            <div class="dot"></div><span>Quick Actions on Assets</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Applies To</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Upscale</td>
+                <td class="muted">Image + Video</td>
+              </tr>
+              <tr>
+                <td>Background Removal</td>
+                <td class="muted">Image + Video</td>
+              </tr>
+              <tr>
+                <td>Vectorize</td>
+                <td class="muted">Image only</td>
+              </tr>
+              <tr>
+                <td>Extract Layers</td>
+                <td class="muted">Image only</td>
+              </tr>
+              <tr>
+                <td>Edit (inline)</td>
+                <td class="muted">Image + Video</td>
+              </tr>
+              <tr>
+                <td>Node chat session</td>
+                <td class="muted">Any asset</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="section-header">
+            <div class="dot"></div><span>What the User Sees Per Request</span>
+          </div>
+          <p class="body-sm">① Thinking block (Claude's reasoning, collapsible)</p>
+          <p class="body-sm">② Tool step with spinner — generation in progress</p>
+          <p class="body-sm">③ Progress bar filling on the step (0% → 100%)</p>
+          <p class="body-sm">④ Asset spawns on canvas mid-stream on completion</p>
+          <p class="body-sm">⑤ Agent response text streams in after</p>
+          <p class="body-sm">⑥ Notification bell tracks background jobs across reloads</p>
+        </div>
       </div>
     </div>
 
-    <div class="reveal reveal-delay-3">
-      <div class="card" style="margin-bottom:12px;">
-        <div class="section-header"><div class="dot"></div><span>Quick Actions on Assets</span></div>
-        <table class="data-table">
-          <thead><tr><th>Action</th><th>Applies To</th></tr></thead>
-          <tbody>
-            <tr><td>Upscale</td><td class="muted">Image + Video</td></tr>
-            <tr><td>Background Removal</td><td class="muted">Image + Video</td></tr>
-            <tr><td>Vectorize</td><td class="muted">Image only</td></tr>
-            <tr><td>Extract Layers</td><td class="muted">Image only</td></tr>
-            <tr><td>Edit (inline)</td><td class="muted">Image + Video</td></tr>
-            <tr><td>Node chat session</td><td class="muted">Any asset</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card">
-        <div class="section-header"><div class="dot"></div><span>What the User Sees Per Request</span></div>
-        <p class="body-sm">① Thinking block (Claude's reasoning, collapsible)</p>
-        <p class="body-sm">② Tool step with spinner — generation in progress</p>
-        <p class="body-sm">③ Progress bar filling on the step (0% → 100%)</p>
-        <p class="body-sm">④ Asset spawns on canvas mid-stream on completion</p>
-        <p class="body-sm">⑤ Agent response text streams in after</p>
-        <p class="body-sm">⑥ Notification bell tracks background jobs across reloads</p>
-      </div>
+    <div class="closer reveal reveal-delay-4">
+      Canvas navigation: pan, zoom, undo/redo (20 steps), multi-select, grouping, z-order, auto-save every 2 seconds.
     </div>
-  </div>
 
-  <div class="closer reveal reveal-delay-4">
-    Canvas navigation: pan, zoom, undo/redo (20 steps), multi-select, grouping, z-order, auto-save every 2 seconds.
-  </div>
+    <div class="slide-num">11 / 14</div>
+  </section>
 
-  <div class="slide-num">11 / 18</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
      SLIDE 11 — TECHNICAL ARCHITECTURE
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="tech-arch" data-slide="11">
-  <div class="tag blue reveal">05 — Technical Architecture</div>
-  <h2 class="reveal reveal-delay-1">Built for Scale<br/><span class="grad-text">from Day One.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
+  <section class="slide" id="tech-arch" data-slide="11">
+    <div class="tag blue reveal">11 — Technical Architecture</div>
+    <h2 class="reveal reveal-delay-1">Built for Scale<br /><span class="grad-text">from Day One.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <div class="two-col mt-s">
-    <div class="card reveal reveal-delay-2">
-      <div class="section-header"><div class="dot"></div><span>Stack at a Glance</span></div>
-      <table class="data-table">
-        <thead><tr><th>Layer</th><th>Technology</th></tr></thead>
-        <tbody>
-          <tr><td>Frontend</td><td class="muted">Next.js 16, React 19, TypeScript, Zustand 5</td></tr>
-          <tr><td>Canvas</td><td class="muted">Custom-built, rbush R-tree spatial index</td></tr>
-          <tr><td>Backend</td><td class="muted">FastAPI (Python), async throughout</td></tr>
-          <tr><td>AI Agent</td><td class="muted">Anthropic Claude — extended thinking, prompt caching, BM25</td></tr>
-          <tr><td>Models</td><td class="muted">Fal.ai unified API (50+ models)</td></tr>
-          <tr><td>Database</td><td class="muted">Supabase (PostgreSQL + Storage + Auth)</td></tr>
-          <tr><td>Payments</td><td class="muted">Razorpay (credit purchase, webhook)</td></tr>
-          <tr><td>Real-time</td><td class="muted">Redis pub/sub + WebSocket (built, feature-flagged)</td></tr>
-        </tbody>
-      </table>
+    <div class="two-col mt-s">
+      <div class="card reveal reveal-delay-2">
+        <div class="section-header">
+          <div class="dot"></div><span>Stack at a Glance</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Technology</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Frontend</td>
+              <td class="muted">Next.js 16, React 19, TypeScript, Zustand 5</td>
+            </tr>
+            <tr>
+              <td>Canvas</td>
+              <td class="muted">Custom-built, rbush R-tree spatial index</td>
+            </tr>
+            <tr>
+              <td>Backend</td>
+              <td class="muted">FastAPI (Python), async throughout</td>
+            </tr>
+            <tr>
+              <td>AI Agent</td>
+              <td class="muted">Anthropic Claude — extended thinking, prompt caching, BM25</td>
+            </tr>
+            <tr>
+              <td>Models</td>
+              <td class="muted">Fal.ai unified API (50+ models)</td>
+            </tr>
+            <tr>
+              <td>Database</td>
+              <td class="muted">Supabase (PostgreSQL + Storage + Auth)</td>
+            </tr>
+            <tr>
+              <td>Payments</td>
+              <td class="muted">Razorpay (credit purchase, webhook)</td>
+            </tr>
+            <tr>
+              <td>Real-time</td>
+              <td class="muted">Redis pub/sub + WebSocket (built, feature-flagged)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card reveal reveal-delay-3">
+        <div class="section-header">
+          <div class="dot"></div><span>Cost Optimisation Per Request</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Technique</th>
+              <th>Saving</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Prompt caching (Anthropic, 5-min TTL)</td>
+              <td class="accent">60–80% input token cost</td>
+            </tr>
+            <tr>
+              <td>Deferred tools vs loading all 50</td>
+              <td class="accent">~14,500 tokens saved</td>
+            </tr>
+            <tr>
+              <td>Thinking block stripping between loops</td>
+              <td class="accent">5K–20K tokens per iteration</td>
+            </tr>
+            <tr>
+              <td>Tool result truncation (iter 3+)</td>
+              <td class="accent">2K–10K tokens</td>
+            </tr>
+            <tr>
+              <td>Conversation history trimming</td>
+              <td class="accent">5K–15K tokens/request</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="section-header mt-m">
+          <div class="dot"></div><span>Scale-Out Path (all built, feature-flagged)</span>
+        </div>
+        <p class="body-sm">· <strong>ARQ workers</strong> — horizontal job scaling (<code>USE_ARQ_WORKERS=true</code>)
+        </p>
+        <p class="body-sm">· <strong>Redis pub/sub</strong> — real-time job progress (<code>REDIS_URL</code>)</p>
+        <p class="body-sm">· <strong>WebSocket</strong> — bidirectional real-time (<code>USE_WEBSOCKET=true</code>)</p>
+      </div>
     </div>
 
-    <div class="card reveal reveal-delay-3">
-      <div class="section-header"><div class="dot"></div><span>Cost Optimisation Per Request</span></div>
-      <table class="data-table">
-        <thead><tr><th>Technique</th><th>Saving</th></tr></thead>
-        <tbody>
-          <tr><td>Prompt caching (Anthropic, 5-min TTL)</td><td class="accent">60–80% input token cost</td></tr>
-          <tr><td>Deferred tools vs loading all 50</td><td class="accent">~14,500 tokens saved</td></tr>
-          <tr><td>Thinking block stripping between loops</td><td class="accent">5K–20K tokens per iteration</td></tr>
-          <tr><td>Tool result truncation (iter 3+)</td><td class="accent">2K–10K tokens</td></tr>
-          <tr><td>Conversation history trimming</td><td class="accent">5K–15K tokens/request</td></tr>
-        </tbody>
-      </table>
-      <div class="section-header mt-m"><div class="dot"></div><span>Scale-Out Path (all built, feature-flagged)</span></div>
-      <p class="body-sm">· <strong>ARQ workers</strong> — horizontal job scaling (<code>USE_ARQ_WORKERS=true</code>)</p>
-      <p class="body-sm">· <strong>Redis pub/sub</strong> — real-time job progress (<code>REDIS_URL</code>)</p>
-      <p class="body-sm">· <strong>WebSocket</strong> — bidirectional real-time (<code>USE_WEBSOCKET=true</code>)</p>
+    <div class="stat-grid mt-m reveal reveal-delay-4" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr));">
+      <div class="stat-card"><span class="num">15</span><span class="label">Max agent iterations per request</span>
+      </div>
+      <div class="stat-card"><span class="num">20K</span><span class="label">Max thinking tokens (high budget)</span>
+      </div>
+      <div class="stat-card"><span class="num">13</span><span class="label">SSE event types</span></div>
+      <div class="stat-card"><span class="num">9</span><span class="label">Database tables (Supabase)</span></div>
+      <div class="stat-card"><span class="num">30+</span><span class="label">API endpoints</span></div>
     </div>
-  </div>
 
-  <div class="stat-grid mt-m reveal reveal-delay-4" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr));">
-    <div class="stat-card"><span class="num">15</span><span class="label">Max agent iterations per request</span></div>
-    <div class="stat-card"><span class="num">20K</span><span class="label">Max thinking tokens (high budget)</span></div>
-    <div class="stat-card"><span class="num">13</span><span class="label">SSE event types</span></div>
-    <div class="stat-card"><span class="num">9</span><span class="label">Database tables (Supabase)</span></div>
-    <div class="stat-card"><span class="num">30+</span><span class="label">API endpoints</span></div>
-  </div>
+    <div class="slide-num">12 / 14</div>
+  </section>
 
-  <div class="slide-num">12 / 18</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
      SLIDE 12 — MODELS
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="models" data-slide="12">
-  <div class="tag green reveal">06 — Model Registry</div>
-  <h2 class="reveal reveal-delay-1">50+ Models.<br/><span class="grad-text">20+ Providers. One Interface.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
+  <section class="slide" id="models" data-slide="12">
+    <div class="tag green reveal">12 — Model Registry</div>
+    <h2 class="reveal reveal-delay-1">50+ Models.<br /><span class="grad-text">20+ Providers. One Interface.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <div class="stat-grid mt-s reveal reveal-delay-2" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr));">
-    <div class="stat-card"><span class="num">50+</span><span class="label">Total models integrated</span></div>
-    <div class="stat-card"><span class="num">26</span><span class="label">Video models</span></div>
-    <div class="stat-card"><span class="num">10</span><span class="label">Image models</span></div>
-    <div class="stat-card"><span class="num">10</span><span class="label">Audio models</span></div>
-    <div class="stat-card"><span class="num">6</span><span class="label">3D models</span></div>
-    <div class="stat-card"><span class="num">28</span><span class="label">Task types covered</span></div>
-    <div class="stat-card"><span class="num">~2 hrs</span><span class="label">To integrate a new model</span></div>
-    <div class="stat-card"><span class="num">~20</span><span class="label">Lines of config per model</span></div>
-  </div>
+    <div class="stat-grid mt-s reveal reveal-delay-2" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr));">
+      <div class="stat-card"><span class="num">50+</span><span class="label">Total models integrated</span></div>
+      <div class="stat-card"><span class="num">26</span><span class="label">Video models</span></div>
+      <div class="stat-card"><span class="num">10</span><span class="label">Image models</span></div>
+      <div class="stat-card"><span class="num">10</span><span class="label">Audio models</span></div>
+      <div class="stat-card"><span class="num">3</span><span class="label">3D models</span></div>
+      <div class="stat-card"><span class="num">28</span><span class="label">Task types covered</span></div>
+      <div class="stat-card"><span class="num">~5 min</span><span class="label">To integrate a new model</span></div>
+      <div class="stat-card"><span class="num">~20</span><span class="label">Lines of config per model</span></div>
+    </div>
 
-  <div class="two-col mt-m">
-    <div class="card reveal reveal-delay-3">
-      <div class="section-header"><div class="dot"></div><span>Provider Coverage (20+ providers)</span></div>
-      <table class="data-table">
-        <thead><tr><th>Provider</th><th>Models</th><th>Category</th></tr></thead>
-        <tbody>
-          <tr><td>Google (Veo 3.1)</td><td class="accent">7</td><td class="muted">Video</td></tr>
-          <tr><td>OpenAI (Sora 2)</td><td class="accent">6</td><td class="muted">Video + Image</td></tr>
-          <tr><td>Tencent (Hunyuan3D)</td><td class="accent">4</td><td class="muted">3D</td></tr>
-          <tr><td>NanoBanana</td><td class="accent">4</td><td class="muted">Image</td></tr>
+    <div class="two-col mt-m">
+      <div class="card reveal reveal-delay-3">
+        <div class="section-header">
+          <div class="dot"></div><span>Provider Coverage (20+ providers)</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Provider</th>
+              <th>Models</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Google</td>
+              <td class="accent">11</td>
+              <td class="muted">Video (Veo 3.1 × 7) + Image (NanoBanana × 4)</td>
+            </tr>
+            <tr>
+              <td>OpenAI</td>
+              <td class="accent">6</td>
+              <td class="muted">Video (Sora 2 × 4) + Image (GPT Image 1.5 × 2)</td>
+            </tr>
+            <tr>
+              <td>Tencent</td>
+              <td class="accent">4</td>
+              <td class="muted">3D (Hunyuan3D — T2-3D, I2-3D, Part Split, Retopo)</td>
+            </tr>
+            <tr>
+              <td>MiniMax</td>
+              <td class="accent">3</td>
+              <td class="muted">Audio (TTS, Voice Design, Voice Clone)</td>
+            </tr>
+            <tr>
+              <td>ElevenLabs</td>
+              <td class="accent">3</td>
+              <td class="muted">Video (Dubbing) + Audio (Music, Scribe transcription)</td>
+            </tr>
+            <tr>
+              <td>LTX / Lightricks</td>
+              <td class="accent">3</td>
+              <td class="muted">Video (Extend, Audio-to-Video, Video-to-Video)</td>
+            </tr>
+            <tr>
+              <td>Kuaishou (Kling)</td>
+              <td class="accent">2</td>
+              <td class="muted">Video (Kling 3.0 — T2V, I2V)</td>
+            </tr>
+            <tr>
+              <td>Bria</td>
+              <td class="accent">2</td>
+              <td class="muted">Video (Background Removal, Object Erase)</td>
+            </tr>
+            <tr>
+              <td>Topaz</td>
+              <td class="accent">2</td>
+              <td class="muted">Image + Video (Upscale)</td>
+            </tr>
+            <tr>
+              <td>CassetteAI</td>
+              <td class="accent">2</td>
+              <td class="muted">Audio (Music Generation, Video-to-SFX)</td>
+            </tr>
+            <tr>
+              <td>Meshy</td>
+              <td class="accent">2</td>
+              <td class="muted">3D (Text-to-3D, Multi-Image-to-3D)</td>
+            </tr>
+            <tr>
+              <td>Tripo3D</td>
+              <td class="accent">2</td>
+              <td class="muted">3D (Image-to-3D, Multiview-to-3D)</td>
+            </tr>
+            <tr>
+              <td>WAN</td>
+              <td class="accent">1</td>
+              <td class="muted">Video (VACE — natural language video editing)</td>
+            </tr>
+            <tr>
+              <td>LightX</td>
+              <td class="accent">1</td>
+              <td class="muted">Video (Recamera &amp; Relight)</td>
+            </tr>
+            <tr>
+              <td>Sync</td>
+              <td class="accent">1</td>
+              <td class="muted">Video (Lipsync V2 Pro)</td>
+            </tr>
+            <tr>
+              <td>PixVerse</td>
+              <td class="accent">1</td>
+              <td class="muted">Video (Face / Object / Background Swap)</td>
+            </tr>
+            <tr>
+              <td>Qwen / Alibaba</td>
+              <td class="accent">1</td>
+              <td class="muted">Image (Layered extraction)</td>
+            </tr>
+            <tr>
+              <td>Recraft</td>
+              <td class="accent">1</td>
+              <td class="muted">Image (Vectorize — raster to SVG)</td>
+            </tr>
+            <tr>
+              <td>rembg</td>
+              <td class="accent">1</td>
+              <td class="muted">Image (Background Removal)</td>
+            </tr>
+            <tr>
+              <td>Stability AI</td>
+              <td class="accent">1</td>
+              <td class="muted">Audio (Stable Audio 2.5 Edit)</td>
+            </tr>
+            <tr>
+              <td>Resemble AI</td>
+              <td class="accent">1</td>
+              <td class="muted">Audio (Chatterbox — Speech-to-Speech)</td>
+            </tr>
+            <tr>
+              <td>SAM Audio</td>
+              <td class="accent">1</td>
+              <td class="muted">Audio (Source separation)</td>
+            </tr>
+          </tbody>
+
+          <!-- <tbody>
+          <tr><td>Google</td><td class="accent">7</td><td class="muted">Video + Image</td></tr>
+          <tr><td>OpenAI</td><td class="accent">6</td><td class="muted">Video + Image</td></tr>
+          <tr><td>Tencent</td><td class="accent">4</td><td class="muted">3D</td></tr>
+          <tr><td>Kuaishou Technology</td><td class="accent">4</td><td class="muted">Video</td></tr>
           <tr><td>ElevenLabs</td><td class="accent">3</td><td class="muted">Video (dubbing) + Audio</td></tr>
           <tr><td>MiniMax</td><td class="accent">3</td><td class="muted">Audio</td></tr>
           <tr><td>LTX</td><td class="accent">3</td><td class="muted">Video</td></tr>
           <tr><td>Topaz</td><td class="accent">2</td><td class="muted">Image + Video (upscale)</td></tr>
           <tr><td>Meshy / Bria / WAN / Kling…</td><td class="accent">12+</td><td class="muted">Various</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card reveal reveal-delay-4">
-      <div class="section-header"><div class="dot"></div><span>Unique Capabilities (rare in any single platform)</span></div>
-      <table class="data-table">
-        <thead><tr><th>Capability</th><th>Model</th></tr></thead>
-        <tbody>
-          <tr><td>Text → video WITH native sync audio</td><td class="muted">Veo 3.1</td></tr>
-          <tr><td>Multi-shot, consistent subject</td><td class="muted">Kling 3.0</td></tr>
-          <tr><td>Video dubbing (lip-synced, multilingual)</td><td class="muted">ElevenLabs</td></tr>
-          <tr><td>Video object erasure</td><td class="muted">Bria</td></tr>
-          <tr><td>Audio-driven video generation</td><td class="muted">LTX-2</td></tr>
-          <tr><td>Raster → SVG vector</td><td class="muted">Recraft</td></tr>
-          <tr><td>Image → semantic layers</td><td class="muted">Qwen</td></tr>
-          <tr><td>Text → 3D mesh + retopology</td><td class="muted">Hunyuan3D</td></tr>
-          <tr><td>Voice clone + voice design</td><td class="muted">MiniMax</td></tr>
-          <tr><td>Camera reconfiguration / relighting</td><td class="muted">LightX</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="slide-num">13 / 18</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 13 — WHAT'S BUILT
-═══════════════════════════════════════════════ -->
-<section class="slide" id="whats-built" data-slide="13">
-  <div class="tag purple reveal">07 — What's Already Built</div>
-  <h2 class="reveal reveal-delay-1">160+ Features.<br/><span class="grad-text">Zero Prototype Debt.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
-
-  <div class="stat-grid mt-s reveal reveal-delay-2" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr));">
-    <div class="stat-card"><span class="num">160+</span><span class="label">Discrete features / capabilities</span></div>
-    <div class="stat-card"><span class="num">19</span><span class="label">FFmpeg operations</span></div>
-    <div class="stat-card"><span class="num">23</span><span class="label">Enterprise infra features</span></div>
-    <div class="stat-card"><span class="num">30+</span><span class="label">API endpoints</span></div>
-  </div>
-
-  <div class="two-col mt-m">
-    <div class="card reveal reveal-delay-3">
-      <div class="section-header"><div class="dot" style="background:var(--green);opacity:1;"></div><span>Built — Production Ready</span></div>
-      <p class="body-sm">✓ Spatial canvas, 9 element types, R-tree index</p>
-      <p class="body-sm">✓ Agent loop — extended thinking, BM25, streaming</p>
-      <p class="body-sm">✓ 50+ model integrations (all 4 categories)</p>
-      <p class="body-sm">✓ Fire-and-forget generation + job tracking</p>
-      <p class="body-sm">✓ Inline video/audio editor (19 operations)</p>
-      <p class="body-sm">✓ Quick actions (upscale, vectorize, bg removal, layers)</p>
-      <p class="body-sm">✓ Mind map system with agent + media attachments</p>
-      <p class="body-sm">✓ Brand kits auto-injected into every generation</p>
-      <p class="body-sm">✓ Multi-session chat (project + asset sessions)</p>
-      <p class="body-sm">✓ Credit system (atomic, refund on failure)</p>
-      <p class="body-sm">✓ Auth (Google OAuth + email, JWT, HTTP-only cookie)</p>
-      <p class="body-sm">✓ Payments (Razorpay, credit top-up, webhook)</p>
-      <p class="body-sm">✓ Consent system with audit trail</p>
-      <p class="body-sm">✓ ARQ workers, Redis, WebSocket (feature-flagged)</p>
-    </div>
-
-    <div class="reveal reveal-delay-4">
-      <div class="card" style="margin-bottom:12px;">
-        <div class="section-header"><div class="dot" style="background:#b91c1c;opacity:1;"></div><span>Not Built — Honest Gaps</span></div>
-        <p class="body-sm">✗ User onboarding / first-run experience</p>
-        <p class="body-sm">✗ Public landing page / marketing site</p>
-        <p class="body-sm">✗ Team collaboration (shared canvas)</p>
-        <p class="body-sm">✗ Admin dashboard / analytics</p>
-        <p class="body-sm">✗ Mobile-responsive UI</p>
-        <p class="body-sm">✗ Enterprise SSO (SAML/OKTA)</p>
-        <p class="body-sm">✗ White-labeling / multi-tenant</p>
+        </tbody> -->
+        </table>
       </div>
-      <div class="closer" style="margin-top:0;">
-        Everything missing is go-to-market infrastructure, not core product. The hard engineering is done.
+
+      <div class="card reveal reveal-delay-4">
+        <div class="section-header">
+          <div class="dot"></div><span>Unique Capabilities (rare in any single platform)</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th>Model</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Text → video WITH native sync audio</td>
+              <td class="muted">Veo 3.1</td>
+            </tr>
+            <tr>
+              <td>Multi-shot, consistent subject</td>
+              <td class="muted">Kling 3.0</td>
+            </tr>
+            <tr>
+              <td>Video dubbing (lip-synced, multilingual)</td>
+              <td class="muted">ElevenLabs</td>
+            </tr>
+            <tr>
+              <td>Video object erasure</td>
+              <td class="muted">Bria</td>
+            </tr>
+            <tr>
+              <td>Audio-driven video generation</td>
+              <td class="muted">LTX-2</td>
+            </tr>
+            <tr>
+              <td>Raster → SVG vector</td>
+              <td class="muted">Recraft</td>
+            </tr>
+            <tr>
+              <td>Image → semantic layers</td>
+              <td class="muted">Qwen</td>
+            </tr>
+            <tr>
+              <td>Text → 3D mesh + retopology</td>
+              <td class="muted">Hunyuan3D</td>
+            </tr>
+            <tr>
+              <td>Voice clone + voice design</td>
+              <td class="muted">MiniMax</td>
+            </tr>
+            <tr>
+              <td>Camera reconfiguration / relighting</td>
+              <td class="muted">LightX</td>
+            </tr>
+            <tr>
+              <td>Natural language video editing (not re-generation)</td>
+              <td class="muted">WAN VACE</td>
+            </tr>
+            <tr>
+              <td>Video → synchronized SFX generation</td>
+              <td class="muted">CassetteAI</td>
+            </tr>
+            <tr>
+              <td>Lip sync to custom audio (post-dub sync)</td>
+              <td class="muted">Sync Lipsync V2</td>
+            </tr>
+            <tr>
+              <td>Face / object / background swap in video</td>
+              <td class="muted">PixVerse</td>
+            </tr>
+            <tr>
+              <td>Voice-to-voice conversion (style transfer)</td>
+              <td class="muted">Resemble AI (Chatterbox)</td>
+            </tr>
+            <tr>
+              <td>Video style transfer with structure preservation</td>
+              <td class="muted">LTX-2 V2V</td>
+            </tr>
+            <tr>
+              <td>Multi-image / multiview → 3D mesh</td>
+              <td class="muted">Meshy + Tripo3D</td>
+            </tr>
+            <tr>
+              <td>Audio stem separation (vocals, instruments)</td>
+              <td class="muted">SAM Audio</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
 
-  <div class="slide-num">14 / 18</div>
-</section>
+    <div class="slide-num">13 / 14</div>
+  </section>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 14 — ROADMAP
+  <!-- ═══════════════════════════════════════════════
+     SLIDE 13 — WHAT'S BUILT (commented out)
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="roadmap" data-slide="14">
-  <div class="tag orange reveal">08 — Roadmap</div>
-  <h2 class="reveal reveal-delay-1">What's Missing Is<br/><span class="grad-text">How We Reach Users.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
+  <!--
+  <section class="slide" id="whats-built" data-slide="13">
+    <div class="tag purple reveal">13 — What's Already Built</div>
+    <h2 class="reveal reveal-delay-1">160+ Features.<br /><span class="grad-text">Zero Prototype Debt.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <div class="card reveal reveal-delay-2">
-    <div class="section-header"><div class="dot"></div><span>Tier 1 — Required Before Public Launch (6–12 weeks, small team)</span></div>
-    <table class="data-table">
-      <thead><tr><th>Gap</th><th>Description</th><th>Effort</th></tr></thead>
-      <tbody>
-        <tr><td>User onboarding</td><td class="muted">First-run, guided first generation, template projects</td><td class="muted">3–4 weeks</td></tr>
-        <tr><td>Public landing page</td><td class="muted">Marketing site, demo, pricing, sign-up</td><td class="muted">1–2 weeks</td></tr>
-        <tr><td>Email flows</td><td class="muted">Welcome, generation complete, credit low</td><td class="muted">1–2 weeks</td></tr>
-        <tr><td>Error handling UX</td><td class="muted">User-facing messages for common failure cases</td><td class="muted">1–2 weeks</td></tr>
-        <tr><td>Basic analytics</td><td class="muted">Page views, generation counts, conversion (Mixpanel/Posthog)</td><td class="muted">1 week</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="two-col mt-m">
-    <div class="card reveal reveal-delay-3">
-      <div class="section-header"><div class="dot"></div><span>Phase 1 — Launch (Weeks 1–12)</span></div>
-      <p class="body-sm">Onboarding, landing page, email flows, analytics</p>
-      <p class="body-sm">Enable ARQ workers + Redis for production scale</p>
-      <p class="body-sm" style="color:var(--navy);font-weight:600;margin-top:8px;">Goal: first 1,000 paying users</p>
+    <div class="stat-grid mt-s reveal reveal-delay-2" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr));">
+      <div class="stat-card"><span class="num">160+</span><span class="label">Discrete features / capabilities</span>
+      </div>
+      <div class="stat-card"><span class="num">19</span><span class="label">FFmpeg operations</span></div>
+      <div class="stat-card"><span class="num">23</span><span class="label">Enterprise infra features</span></div>
+      <div class="stat-card"><span class="num">30+</span><span class="label">API endpoints</span></div>
     </div>
-    <div class="card reveal reveal-delay-3">
-      <div class="section-header"><div class="dot"></div><span>Phase 2 — Growth (Months 3–9)</span></div>
-      <p class="body-sm">Team workspaces + shared canvas (WebSocket built)</p>
-      <p class="body-sm">Admin dashboard, mobile UI, enterprise SSO</p>
-      <p class="body-sm" style="color:var(--navy);font-weight:600;margin-top:8px;">Goal: agency / studio segment, $1M ARR</p>
+
+    <div class="two-col mt-m">
+      <div class="card reveal reveal-delay-3">
+        <div class="section-header">
+          <div class="dot" style="background:var(--green);opacity:1;"></div><span>Built — Production Ready</span>
+        </div>
+        <p class="body-sm">✓ Spatial canvas, 9 element types, R-tree index</p>
+        <p class="body-sm">✓ Agent loop — extended thinking, BM25, streaming</p>
+        <p class="body-sm">✓ 50+ model integrations (all 4 categories)</p>
+        <p class="body-sm">✓ Fire-and-forget generation + job tracking</p>
+        <p class="body-sm">✓ Inline video/audio editor (19 operations)</p>
+        <p class="body-sm">✓ Quick actions (upscale, vectorize, bg removal, layers)</p>
+        <p class="body-sm">✓ Mind map system with agent + media attachments</p>
+        <p class="body-sm">✓ Brand kits auto-injected into every generation</p>
+        <p class="body-sm">✓ Multi-session chat (project + asset sessions)</p>
+        <p class="body-sm">✓ Credit system (atomic, refund on failure)</p>
+        <p class="body-sm">✓ Auth (Google OAuth + email, JWT, HTTP-only cookie)</p>
+        <p class="body-sm">✓ Payments (Razorpay, credit top-up, webhook)</p>
+        <p class="body-sm">✓ Consent system with audit trail</p>
+        <p class="body-sm">✓ ARQ workers, Redis, WebSocket (feature-flagged)</p>
+      </div>
+
+      <div class="reveal reveal-delay-4">
+        <div class="card" style="margin-bottom:12px;">
+          <div class="section-header">
+            <div class="dot" style="background:#b91c1c;opacity:1;"></div><span>Not Built — Honest Gaps</span>
+          </div>
+          <p class="body-sm">✗ User onboarding / first-run experience</p>
+          <p class="body-sm">✗ Public landing page / marketing site</p>
+          <p class="body-sm">✗ Team collaboration (shared canvas)</p>
+          <p class="body-sm">✗ Admin dashboard / analytics</p>
+          <p class="body-sm">✗ Mobile-responsive UI</p>
+          <p class="body-sm">✗ Enterprise SSO (SAML/OKTA)</p>
+          <p class="body-sm">✗ White-labeling / multi-tenant</p>
+        </div>
+        <div class="closer" style="margin-top:0;">
+          Everything missing is go-to-market infrastructure, not core product. The hard engineering is done.
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="card mt-m reveal reveal-delay-4">
-    <div class="section-header"><div class="dot"></div><span>Already Built and Feature-Flagged — Turning On Is Configuration, Not Engineering</span></div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;">
-      <span class="pill" style="color:var(--navy);border-color:#b8c6e0;">Redis pub/sub → real-time job progress</span>
-      <span class="pill" style="color:var(--navy);border-color:#b8c6e0;">WebSocket endpoint → collaboration foundation</span>
-      <span class="pill" style="color:var(--navy);border-color:#b8c6e0;">ARQ worker pool → horizontal generation scaling</span>
-    </div>
-  </div>
+    <div class="slide-num">14 / 14</div>
+  </section>
 
-  <div class="closer reveal reveal-delay-5">
-    "What's missing is six weeks of execution. What's built is the platform that makes it worth executing."
-  </div>
-
-  <div class="slide-num">15 / 18</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 15 — TEAM
+  <!-- ═══════════════════════════════════════════════
+     SLIDE 14 — ROADMAP (commented out)
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="team" data-slide="15">
-  <div class="tag purple reveal">09 — The Team</div>
-  <h2 class="reveal reveal-delay-1"><span class="grad-text">Who Built This.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
+  <!--
+  <section class="slide" id="roadmap" data-slide="14">
+    <div class="tag orange reveal">14 — Roadmap</div>
+    <h2 class="reveal reveal-delay-1">What's Missing Is<br /><span class="grad-text">How We Reach Users.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
+    [roadmap content removed]
+    <div class="slide-num">15 / 14</div>
+  </section>
+  -->
 
-  <!-- ⚠️ FOUNDER: Fill in this section with your personal details -->
-  <div class="card reveal reveal-delay-2" style="border:1px dashed #b8c6e0;background:#f7f9ff;">
-    <p class="eyebrow" style="margin-bottom:8px;">[ Founder / Builder — Fill in your details ]</p>
-    <p class="body-sm" style="color:var(--text);">
-      <strong>[Your Name]</strong> — Founder / Builder<br/>
-      [2–3 sentences: background, relevant expertise, why you built this.]<br/>
-      [Post-acquisition intent: e.g. "Open to staying and leading product" or "6-month transition + handoff".]
-    </p>
-  </div>
+  <!-- ═══════════════════════════════════════════════
+     SLIDE 15 — TEAM (commented out)
+═══════════════════════════════════════════════ -->
+  <!--
+  <section class="slide" id="team" data-slide="15">
+    <div class="tag purple reveal">15 — The Team</div>
+    <h2 class="reveal reveal-delay-1"><span class="grad-text">Who Built This.</span></h2>
+    [team content removed]
+    <div class="slide-num">16 / 14</div>
+  </section>
+  -->
 
-  <div class="card mt-m reveal reveal-delay-3">
-    <div class="section-header"><div class="dot"></div><span>What the Codebase Says About the Builder</span></div>
-    <table class="data-table">
-      <thead><tr><th>Signal</th><th>What It Shows</th></tr></thead>
-      <tbody>
-        <tr><td>160+ features, consistent style, clean module separation</td><td class="muted">Not a fragmented hobby project — architectural intent throughout</td></tr>
-        <tr><td>Custom canvas, BM25 deferred tools, fire-and-forget architecture</td><td class="muted">Not tutorial decisions — deep product thinking and technical depth</td></tr>
-        <tr><td>Extended thinking, prompt caching, deferred tools</td><td class="muted">Anthropic API at a level most teams don't reach</td></tr>
-        <tr><td>Credit atomicity, token refresh on 401, job tracker persisting across reloads</td><td class="muted">Decisions of someone who has shipped production software</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="closer reveal reveal-delay-4">
-    "If a CTO reviews the codebase, these decisions will tell the story better than any slide."
-  </div>
-
-  <div class="slide-num">16 / 18</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
      SLIDE 16 — WHY ACQUIRE VS BUILD
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="why-acquire" data-slide="16">
-  <div class="tag orange reveal">10 — Why Acquire vs. Build</div>
-  <h2 class="reveal reveal-delay-1">Building This Takes<br/><span class="grad-text">18 Months and $1M+.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
+  <section class="slide" id="why-acquire" data-slide="16">
+    <div class="tag orange reveal">16 — Why Acquire vs. Build</div>
+    <h2 class="reveal reveal-delay-1">What It Actually Takes<br /><span class="grad-text">to Build This.</span></h2>
+    <div class="divider reveal reveal-delay-2"></div>
 
-  <div class="two-col mt-s">
-    <div class="card reveal reveal-delay-2">
-      <div class="section-header"><div class="dot"></div><span>Engineering Cost to Replicate</span></div>
-      <table class="data-table">
-        <thead><tr><th>Component</th><th>Estimate</th></tr></thead>
-        <tbody>
-          <tr><td>Custom spatial canvas</td><td class="muted">4–6 months</td></tr>
-          <tr><td>Agentic loop (Claude, ext. thinking)</td><td class="muted">2–3 months</td></tr>
-          <tr><td>50+ model integrations</td><td class="muted">6–9 months</td></tr>
-          <tr><td>Inline media editor (FFmpeg)</td><td class="muted">2–3 months</td></tr>
-          <tr><td>Mind map + agent integration</td><td class="muted">1–2 months</td></tr>
-          <tr><td>Enterprise infra (billing, auth, consent)</td><td class="muted">2–3 months</td></tr>
-          <tr><td>Background job tracking</td><td class="muted">1 month</td></tr>
-          <tr class="total"><td><strong>Total estimate</strong></td><td><strong>~25 engineer-months</strong></td></tr>
-        </tbody>
-      </table>
-      <p class="body-sm mt-s">At $15K–$20K/month per senior engineer:<br/><strong style="color:var(--navy);">$375K–$500K direct engineering cost.</strong><br/>With product, design, QA: <strong style="color:var(--navy);">$600K–$1M+</strong> before first user.</p>
+    <div class="two-col mt-s">
+      <div class="card reveal reveal-delay-2">
+        <div class="section-header">
+          <div class="dot"></div><span>Engineering Cost to Replicate</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Time</th>
+              <th>Why It's Hard</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Custom spatial canvas</td>
+              <td class="muted">4–6 mo</td>
+              <td class="muted">R-tree spatial index, custom hit-testing, 9 element types, no library shortcut</td>
+            </tr>
+            <tr>
+              <td>Agentic loop (Claude)</td>
+              <td class="muted">2–3 mo</td>
+              <td class="muted">Extended thinking, prompt caching, BM25 deferred tools, streaming SSE, context management</td>
+            </tr>
+            <tr>
+              <td>52 model integrations</td>
+              <td class="muted">6–9 mo</td>
+              <td class="muted">Each model: credit pricing, BM25 tags, parameters, error handling, estimated time — 52 sets of tested decisions</td>
+            </tr>
+            <tr>
+              <td>Inline media editor</td>
+              <td class="muted">2–3 mo</td>
+              <td class="muted">19 FFmpeg operations, server-side processing, timeline UI, per-element edit sessions</td>
+            </tr>
+            <tr>
+              <td>Background job system</td>
+              <td class="muted">1–2 mo</td>
+              <td class="muted">Fire-and-forget + ARQ workers + Redis pub/sub + localStorage persistence across reloads</td>
+            </tr>
+            <tr>
+              <td>Mind map + agent</td>
+              <td class="muted">1–2 mo</td>
+              <td class="muted">Reingold-Tilford layout, edge interaction, agent create/edit tools, media attachments</td>
+            </tr>
+            <tr>
+              <td>Enterprise infra</td>
+              <td class="muted">2–3 mo</td>
+              <td class="muted">Auth (Google OAuth + JWT), Razorpay billing, atomic credit RPC, consent audit trail</td>
+            </tr>
+            <tr class="total">
+              <td><strong>Total</strong></td>
+              <td><strong>~25 engineer-months</strong></td>
+              <td><strong style="color:var(--navy);">$600K–$1M+ before first user</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="reveal reveal-delay-3">
+        <div class="card" style="margin-bottom:12px;">
+          <div class="section-header">
+            <div class="dot"></div><span>Decisions That Can't Be Copied — Only Earned</span>
+          </div>
+          <p class="body-sm" style="margin-bottom:10px;color:var(--text-muted);font-size:11px;">These are non-obvious choices that emerged from building, shipping, and debugging — not from reading documentation.</p>
+          <table class="data-table">
+            <thead><tr><th>Decision</th><th>Why It Matters</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>BM25 over vector search for tool discovery</td>
+                <td class="muted">Zero cold-start, no embeddings infra, exact tag matching across 52 models</td>
+              </tr>
+              <tr>
+                <td>Fire-and-forget generation (return job_id immediately)</td>
+                <td class="muted">Generation takes 30–180s. Synchronous waiting kills UX. Discovered from watching it fail.</td>
+              </tr>
+              <tr>
+                <td>Credit deduction before generation, refund on failure</td>
+                <td class="muted">Prevents balance drift when concurrent requests race. Atomic via Supabase RPC.</td>
+              </tr>
+              <tr>
+                <td>All tools deferred — none loaded upfront</td>
+                <td class="muted">Loading 52+ tool schemas per request would exhaust context. BM25 lazy-loads only what's needed.</td>
+              </tr>
+              <tr>
+                <td>SSE primary, WebSocket feature-flagged</td>
+                <td class="muted">SSE works through all reverse proxies without config. WS requires Redis — made optional.</td>
+              </tr>
+              <tr>
+                <td>Thinking blocks stripped from prior iterations</td>
+                <td class="muted">Extended thinking blocks are large. Keeping them across 15 iterations would overflow context.</td>
+              </tr>
+              <tr>
+                <td>Prompt cache boundary at older messages, not latest</td>
+                <td class="muted">Cache hit requires exact prefix match. Boundary must stay stable as conversation grows.</td>
+              </tr>
+              <tr>
+                <td>Custom canvas over React Flow</td>
+                <td class="muted">9 element types, sub-pixel hit-testing, R-tree spatial index. Any library update would break assumptions.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!--
+        <div class="card">
+          <div class="section-header">
+            <div class="dot"></div><span>Build vs. Acquire — The Real Timeline</span>
+          </div>
+          <p class="body-sm" style="font-weight:600;margin-bottom:4px;">Build scenario</p>
+          <p class="body-sm muted" style="margin-bottom:10px;">Hire → Canvas (4–6mo) → Agent loop (2–3mo) → 52 models (6–9mo) → Editor + infra (3–4mo) → Debug production issues (3mo+) → <strong style="color:#b91c1c;">18–24 months minimum</strong></p>
+          <p class="body-sm" style="font-weight:600;margin-bottom:4px;">Acquire scenario</p>
+          <p class="body-sm muted">NDA → Due diligence (1–2 weeks) → Deal close → <strong style="color:var(--green);">6 weeks to launch-ready</strong></p>
+          <p class="body-sm mt-s" style="color:var(--text-muted);font-size:11px;">And the build scenario still doesn't include the 100+ hours of iteration that produced the decisions in the table above.</p>
+        </div>
+        -->
+      </div>
     </div>
 
-    <div class="reveal reveal-delay-3">
-      <div class="card" style="margin-bottom:12px;">
-        <div class="section-header"><div class="dot"></div><span>What the Acquirer Gets</span></div>
-        <p class="body-sm">· Working platform — 160+ features, production infra, no prototype debt</p>
-        <p class="body-sm">· 50+ model integrations with tested parameters, pricing, BM25 tags</p>
-        <p class="body-sm">· Claude API at maximum depth — extended thinking, caching, deferred tools</p>
-        <p class="body-sm">· Custom spatial canvas — no external dependency, full control</p>
-        <p class="body-sm">· Enterprise infra — auth, billing, payments, consent built</p>
-        <p class="body-sm">· Scale path — ARQ, Redis, WebSocket — built and feature-flagged</p>
-        <p class="body-sm">· Architecture knowledge — reasoning behind every major decision</p>
-        <p class="body-sm">· <strong>Weeks to launch, not 18 months to build</strong></p>
-      </div>
-      <div class="card">
-        <div class="section-header"><div class="dot"></div><span>Ideal Acquirer Types</span></div>
-        <p class="body-sm">· Creative software company (Figma, Canva, Adobe)</p>
-        <p class="body-sm">· AI model company wanting a workflow layer (ElevenLabs, Stability)</p>
-        <p class="body-sm">· Media / entertainment company (internal studio use)</p>
-        <p class="body-sm">· Marketing technology company (add AI creative to MarTech stack)</p>
-        <p class="body-sm">· Agency holding company (internal platform for all agencies)</p>
-      </div>
-    </div>
-  </div>
+    <div class="slide-num">14 / 14</div>
+  </section>
 
-  <div class="slide-num">17 / 18</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 17 — THE ASK
+  <!-- ═══════════════════════════════════════════════
+     SLIDE 17 — THE ASK (commented out)
 ═══════════════════════════════════════════════ -->
-<section class="slide" id="the-ask" data-slide="17">
-  <div class="tag green reveal">11 — The Ask</div>
-  <h2 class="reveal reveal-delay-1"><span class="grad-text">What We're Looking For.</span></h2>
-  <div class="divider reveal reveal-delay-2"></div>
-
-  <div class="card reveal reveal-delay-2">
-    <div class="section-header"><div class="dot"></div><span>Deal Structures We're Open To</span></div>
-    <table class="data-table">
-      <thead><tr><th>Type</th><th>Description</th><th>Best For</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><strong>Full Acquisition</strong></td>
-          <td class="muted">Technology, IP, codebase, model integrations, infrastructure, team</td>
-          <td class="muted">Companies that want to own the AI creative platform category</td>
-        </tr>
-        <tr>
-          <td><strong>Acqui-hire</strong></td>
-          <td class="muted">Founding team joins + technology acquired as part of deal</td>
-          <td class="muted">Companies where founder's continued involvement is as valuable as the platform</td>
-        </tr>
-        <tr>
-          <td><strong>Strategic Licensing</strong></td>
-          <td class="muted">Agentic platform and model registry licensed, white-labeled or co-branded</td>
-          <td class="muted">Companies with existing user base wanting to add AI generation without full acquisition</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="two-col mt-m">
-    <div class="card reveal reveal-delay-3">
-      <div class="section-header"><div class="dot"></div><span>Available for Due Diligence</span></div>
-      <p class="body-sm">✓ Full code repository (NDA-gated)</p>
-      <p class="body-sm">✓ Live product demo (hosted or local)</p>
-      <p class="body-sm">✓ Database schema (Supabase export)</p>
-      <p class="body-sm">✓ API documentation (OpenAPI / FastAPI auto-generated)</p>
-      <p class="body-sm">✓ Architecture walkthrough session</p>
-      <p class="body-sm">✓ Per-request inference cost breakdown (Anthropic + Fal.ai)</p>
-      <p class="body-sm">✓ Dependency audit results</p>
-      <p class="body-sm">✓ Security review readiness</p>
-    </div>
-    <div class="card reveal reveal-delay-4">
-      <div class="section-header"><div class="dot"></div><span>Next Steps</span></div>
-      <p class="body-sm"><strong>1.</strong> Sign NDA → code repository + technical deep-dive</p>
-      <p class="body-sm"><strong>2.</strong> Technical due diligence → CTO / engineering review (1–2 weeks)</p>
-      <p class="body-sm"><strong>3.</strong> Live demo session with key stakeholders (30–60 min)</p>
-      <p class="body-sm"><strong>4.</strong> Term sheet discussion — deal structure, valuation, team terms</p>
-      <p class="body-sm"><strong>5.</strong> Closing — IP transfer, infrastructure migration, team onboarding</p>
-    </div>
-  </div>
-
-  <div class="closer reveal reveal-delay-5">
-    "The platform is built. The market is moving. The window to be the unified AI creative workspace is now — and it's narrowing fast. We're looking for a partner who can put this in front of users at scale."
-  </div>
-
-  <div class="slide-num">18 / 18</div>
-</section>
+  <!--
+  <section class="slide" id="the-ask" data-slide="17">
+    <div class="tag green reveal">17 — The Ask</div>
+    <h2 class="reveal reveal-delay-1"><span class="grad-text">What We're Looking For.</span></h2>
+    [the-ask content removed]
+    <div class="slide-num">18 / 14</div>
+  </section>
+  -->
 
 
-<!-- ═══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
      JAVASCRIPT
 ═══════════════════════════════════════════════ -->
-<script>
-  /* ── Slide data ── */
-  const SLIDE_IDS = ['cover','problem-1','problem-2','opportunity-1','opportunity-2','comparables','competition','solution-1','solution-2','solution-3','product','tech-arch','models','whats-built','roadmap','team','why-acquire','the-ask'];
-  const SLIDE_COUNT = SLIDE_IDS.length;
+  <script>
+    /* ── Slide data ── */
+    const SLIDE_IDS = ['cover', 'problem-1', 'problem-2', 'opportunity-1', 'opportunity-2', 'comparables', 'competition', 'solution-1', 'solution-2', 'solution-3', 'product', 'tech-arch', 'models', 'why-acquire'];
+    const SLIDE_COUNT = SLIDE_IDS.length;
 
-  /* ── Build nav dots ── */
-  const navDots = document.getElementById('navDots');
-  SLIDE_IDS.forEach((id, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'nav-dot' + (i === 0 ? ' active' : '');
-    btn.setAttribute('aria-label', `Go to slide ${i + 1}`);
-    btn.addEventListener('click', () => {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    });
-    navDots.appendChild(btn);
-  });
-
-  /* ── Scroll progress + active dot ── */
-  const progress = document.getElementById('progress');
-  const dots = navDots.querySelectorAll('.nav-dot');
-
-  function onScroll() {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    progress.style.width = pct + '%';
-
-    // active dot
-    let active = 0;
+    /* ── Build nav dots ── */
+    const navDots = document.getElementById('navDots');
     SLIDE_IDS.forEach((id, i) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= window.innerHeight * 0.4) active = i;
+      const btn = document.createElement('button');
+      btn.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      btn.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      btn.addEventListener('click', () => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      });
+      navDots.appendChild(btn);
     });
-    dots.forEach((d, i) => d.classList.toggle('active', i === active));
-  }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
+    /* ── Scroll progress + active dot ── */
+    const progress = document.getElementById('progress');
+    const dots = navDots.querySelectorAll('.nav-dot');
 
-  /* ── Reveal on scroll (Intersection Observer) ── */
-  const revealObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        revealObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
+    function onScroll() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progress.style.width = pct + '%';
 
-  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+      // active dot
+      let active = 0;
+      SLIDE_IDS.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.4) active = i;
+      });
+      dots.forEach((d, i) => d.classList.toggle('active', i === active));
+    }
 
-  /* ── Animated number counters ── */
-  function animateCounter(el) {
-    const target = parseInt(el.dataset.count, 10);
-    const suffix = el.dataset.suffix || '';
-    const duration = 1400;
-    const start = performance.now();
+    window.addEventListener('scroll', onScroll, { passive: true });
 
-    function step(now) {
-      const elapsed = Math.min(now - start, duration);
-      const progress = elapsed / duration;
-      // ease-out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(eased * target);
-
-      // Format large numbers
-      if (target >= 1000) {
-        if (target >= 90000) {
-          el.textContent = (current >= 90000 ? '90' : Math.round(current / 1800)) + 'K' + (suffix.replace('K+','') ? '' : '+');
-        } else {
-          el.textContent = current.toLocaleString() + suffix;
+    /* ── Reveal on scroll (Intersection Observer) ── */
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
         }
-      } else {
-        el.textContent = current + suffix;
-      }
+      });
+    }, { threshold: 0.12 });
 
-      if (elapsed < duration) requestAnimationFrame(step);
-      else {
-        // Final clean value
-        if (target === 90000) el.textContent = '90,000+';
-        else el.textContent = target.toLocaleString() + suffix;
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    /* ── Animated number counters ── */
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1400;
+      const start = performance.now();
+
+      function step(now) {
+        const elapsed = Math.min(now - start, duration);
+        const progress = elapsed / duration;
+        // ease-out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(eased * target);
+
+        // Format large numbers
+        if (target >= 1000) {
+          if (target >= 90000) {
+            el.textContent = (current >= 90000 ? '90' : Math.round(current / 1800)) + 'K' + (suffix.replace('K+', '') ? '' : '+');
+          } else {
+            el.textContent = current.toLocaleString() + suffix;
+          }
+        } else {
+          el.textContent = current + suffix;
+        }
+
+        if (elapsed < duration) requestAnimationFrame(step);
+        else {
+          // Final clean value
+          if (target === 90000) el.textContent = '90,000+';
+          else el.textContent = target.toLocaleString() + suffix;
+        }
       }
+      requestAnimationFrame(step);
     }
-    requestAnimationFrame(step);
-  }
 
-  const counterObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animateCounter(e.target);
-        counterObs.unobserve(e.target);
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCounter(e.target);
+          counterObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+    /* ── Keyboard navigation ── */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        e.preventDefault();
+        const active = Array.from(dots).findIndex(d => d.classList.contains('active'));
+        const next = Math.min(active + 1, SLIDE_COUNT - 1);
+        document.getElementById(SLIDE_IDS[next])?.scrollIntoView({ behavior: 'smooth' });
+      }
+      if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        const active = Array.from(dots).findIndex(d => d.classList.contains('active'));
+        const prev = Math.max(active - 1, 0);
+        document.getElementById(SLIDE_IDS[prev])?.scrollIntoView({ behavior: 'smooth' });
       }
     });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
-
-  /* ── Keyboard navigation ── */
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-      e.preventDefault();
-      const active = Array.from(dots).findIndex(d => d.classList.contains('active'));
-      const next = Math.min(active + 1, SLIDE_COUNT - 1);
-      document.getElementById(SLIDE_IDS[next])?.scrollIntoView({ behavior: 'smooth' });
-    }
-    if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-      e.preventDefault();
-      const active = Array.from(dots).findIndex(d => d.classList.contains('active'));
-      const prev = Math.max(active - 1, 0);
-      document.getElementById(SLIDE_IDS[prev])?.scrollIntoView({ behavior: 'smooth' });
-    }
-  });
 
 
-  // init
-  onScroll();
-</script>
+    // init
+    onScroll();
+  </script>
 </body>
+
 </html>
